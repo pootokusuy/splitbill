@@ -1,0 +1,7175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Bill ✨</title>
+
+<style>
+:root{
+  --bg:#f8f5ff;
+  --white:#ffffff;
+  --text:#39334f;
+  --muted:#8e889e;
+  --border:#ebe7f3;
+
+  --purple:#7567d9;
+  --purple-dark:#594bb7;
+  --purple-soft:#eeeaff;
+
+  --pink:#ef8db5;
+  --pink-soft:#fff0f6;
+
+  --peach:#ffb477;
+  --peach-soft:#fff3e8;
+
+  --mint:#78cbb0;
+  --mint-soft:#eaf9f4;
+
+  --blue:#72a9dc;
+  --blue-soft:#edf6ff;
+
+  --yellow:#f2c85c;
+  --yellow-soft:#fff8df;
+
+  --red:#dc7777;
+  --red-soft:#fff0f0;
+
+  --shadow:0 10px 30px rgba(89,75,183,.10);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  min-height:100%;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      #eeeaff 0,
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 100% 5%,
+      #fff0f6 0,
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #faf8ff,
+      #fffafa,
+      #f5fbf9
+    );
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+input,
+select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:#fff;
+  color:var(--text);
+  padding:12px 13px;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 4px var(--purple-soft);
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+  background:
+    linear-gradient(
+      135deg,
+      #7d70df,
+      #7567d9 48%,
+      #c17bb4
+    );
+  color:#fff;
+  padding:10px 13px 14px;
+  border-radius:0 0 23px 23px;
+  box-shadow:0 8px 25px rgba(118,104,220,.20);
+}
+
+.header-inner{
+  width:100%;
+  max-width:1120px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  font-size:23px;
+  font-weight:900;
+  line-height:1.1;
+}
+
+.logo small{
+  display:block;
+  margin-top:4px;
+  font-size:11px;
+  font-weight:500;
+  opacity:.88;
+}
+
+.home-button{
+  border:2px solid #302b3d;
+  background:#dca2c9;
+  color:#fff;
+  border-radius:16px;
+  padding:10px 17px;
+  font-weight:800;
+  box-shadow:0 3px 0 rgba(0,0,0,.12);
+}
+
+.home-button:hover{
+  transform:translateY(-1px);
+}
+
+.progress{
+  max-width:1120px;
+  margin:13px auto 0;
+  display:none;
+  gap:6px;
+}
+
+.progress-bar{
+  height:5px;
+  flex:1;
+  background:rgba(255,255,255,.28);
+  border-radius:99px;
+}
+
+.progress-bar.active{
+  background:#fff;
+}
+
+/* =====================================================
+   CONTAINER
+===================================================== */
+
+.container{
+  width:100%;
+  max-width:1120px;
+  margin:auto;
+  padding:25px 16px 70px;
+}
+
+.page-title{
+  margin:0 0 6px;
+  font-size:29px;
+}
+
+.page-subtitle{
+  margin:0 0 20px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:21px;
+  padding:20px;
+  margin-bottom:17px;
+  box-shadow:var(--shadow);
+}
+
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+
+label{
+  display:block;
+  margin-bottom:7px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.small{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:11px 16px;
+  font-weight:800;
+  transition:.15s;
+}
+
+.btn:hover{
+  transform:translateY(-1px);
+}
+
+.btn-primary{
+  color:#fff;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple),
+      var(--purple-dark)
+    );
+}
+
+.btn-secondary{
+  color:var(--purple-dark);
+  background:var(--purple-soft);
+}
+
+.btn-pink{
+  color:#b95d83;
+  background:var(--pink-soft);
+}
+
+.btn-peach{
+  color:#b96d32;
+  background:var(--peach-soft);
+}
+
+.btn-mint{
+  color:#37866f;
+  background:var(--mint-soft);
+}
+
+.btn-blue{
+  color:#4f81ad;
+  background:var(--blue-soft);
+}
+
+.btn-danger{
+  color:#bd5959;
+  background:var(--red-soft);
+}
+
+.btn-light{
+  color:#676174;
+  background:#f2f0f5;
+}
+
+.btn-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.section-head h2,
+.section-head h3{
+  margin:0;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 10px;
+  border-radius:99px;
+  font-size:11px;
+  font-weight:900;
+}
+
+.badge-draft{
+  color:#8e7115;
+  background:var(--yellow-soft);
+}
+
+.badge-complete{
+  color:#35836d;
+  background:var(--mint-soft);
+}
+
+.badge-purple{
+  color:var(--purple-dark);
+  background:var(--purple-soft);
+}
+
+/* =====================================================
+   HOME
+===================================================== */
+
+.home-hero{
+  padding:28px;
+  margin-bottom:25px;
+  border:1px solid var(--border);
+  border-radius:25px;
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #f0edff 55%,
+      #fff0f6
+    );
+  box-shadow:var(--shadow);
+}
+
+.home-hero h1{
+  margin:0 0 7px;
+  font-size:34px;
+}
+
+.trip-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:17px;
+}
+
+.trip-card{
+  position:relative;
+  overflow:hidden;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:21px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.trip-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:6px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--purple),
+      var(--pink),
+      var(--peach)
+    );
+}
+
+.trip-card h3{
+  margin:13px 0 4px;
+  font-size:19px;
+}
+
+.trip-destination{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.trip-total{
+  margin:17px 0 10px;
+  color:var(--purple-dark);
+  font-size:25px;
+  font-weight:900;
+}
+
+.trip-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:14px;
+}
+
+.trip-date{
+  margin-bottom:15px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.empty{
+  padding:50px 20px;
+  text-align:center;
+  border:1px dashed var(--border);
+  border-radius:22px;
+  background:#fff;
+}
+
+.empty-icon{
+  margin-bottom:8px;
+  font-size:48px;
+}
+
+/* =====================================================
+   BILL
+===================================================== */
+
+.bill-header-card{
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #f4f0ff
+    );
+}
+
+.help-box{
+  padding:14px 16px;
+  border-radius:15px;
+  color:#4c7395;
+  background:var(--blue-soft);
+  font-size:13px;
+  line-height:1.55;
+}
+
+/* =====================================================
+   PLACE
+===================================================== */
+
+.place-card{
+  overflow:hidden;
+  margin-bottom:17px;
+  border:1px solid var(--border);
+  border-radius:21px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.place-header{
+  padding:17px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple-soft),
+      #fff
+    );
+}
+
+.place-header-row{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.place-body{
+  padding:17px;
+}
+
+.menu-section{
+  margin-bottom:22px;
+}
+
+.menu-card{
+  margin-bottom:11px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+}
+
+.menu-top{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.menu-main{
+  flex:1;
+}
+
+.menu-price-total{
+  margin-top:8px;
+  color:var(--purple-dark);
+  font-size:13px;
+  font-weight:800;
+}
+
+.fee-box{
+  padding:16px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#faf9fd;
+}
+
+.cost-table{
+  overflow:hidden;
+  margin-top:17px;
+  border:1px solid var(--border);
+  border-radius:17px;
+}
+
+.cost-row{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  padding:13px 15px;
+  border-bottom:1px solid var(--border);
+  font-size:13px;
+}
+
+.cost-row:last-child{
+  border-bottom:0;
+}
+
+.cost-row strong{
+  white-space:nowrap;
+}
+
+.cost-row.subtotal{
+  background:#faf9fd;
+}
+
+.cost-row.total{
+  color:var(--purple-dark);
+  background:var(--purple-soft);
+  font-size:14px;
+  font-weight:900;
+}
+
+.cost-negative{
+  color:#c96b7e;
+}
+
+.cost-positive{
+  color:#38876f;
+}
+
+.place-total{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:17px;
+  padding:16px;
+  border-radius:16px;
+  color:var(--purple-dark);
+  background:var(--purple-soft);
+  font-weight:900;
+}
+
+/* =====================================================
+   PEOPLE
+===================================================== */
+
+.people-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+
+.person-card{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+}
+
+.avatar{
+  display:grid;
+  place-items:center;
+  width:40px;
+  min-width:40px;
+  height:40px;
+  border-radius:50%;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple-soft),
+      var(--pink-soft)
+    );
+}
+
+.person-input{
+  flex:1;
+}
+
+/* =====================================================
+   ASSIGNMENT
+===================================================== */
+
+.assignment-place{
+  margin-bottom:17px;
+}
+
+.assignment-item{
+  margin-bottom:11px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:17px;
+}
+
+.assignment-title{
+  margin-bottom:11px;
+  font-weight:900;
+}
+
+.checkbox-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(145px,1fr)
+    );
+  gap:8px;
+}
+
+.check-label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#faf9fd;
+  cursor:pointer;
+  font-size:13px;
+}
+
+.check-label input{
+  width:auto;
+  accent-color:var(--purple);
+}
+
+.check-label.selected{
+  border-color:var(--mint);
+  background:var(--mint-soft);
+}
+
+/* =====================================================
+   ALERT
+===================================================== */
+
+.alert{
+  margin-bottom:15px;
+  padding:13px 15px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.alert-warning{
+  color:#806819;
+  background:var(--yellow-soft);
+}
+
+.alert-success{
+  color:#327963;
+  background:var(--mint-soft);
+}
+
+.alert-danger{
+  color:#a94d4d;
+  background:var(--red-soft);
+}
+
+.alert-info{
+  color:#4c7395;
+  background:var(--blue-soft);
+}
+
+/* =====================================================
+   BOTTOM
+===================================================== */
+
+.bottom-actions{
+  position:sticky;
+  bottom:13px;
+  z-index:30;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:11px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(255,255,255,.94);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);
+}
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+.result-hero{
+  margin-bottom:18px;
+  padding:27px;
+  border:1px solid var(--border);
+  border-radius:24px;
+  background:
+    linear-gradient(
+      135deg,
+      #eeeaff,
+      #fff0f6,
+      #fff4ea
+    );
+  text-align:center;
+}
+
+.result-total{
+  margin:10px 0 3px;
+  color:var(--purple-dark);
+  font-size:38px;
+  font-weight:900;
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.summary-box{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:#faf9fd;
+}
+
+.summary-box small{
+  display:block;
+  margin-bottom:5px;
+  color:var(--muted);
+}
+
+.summary-box strong{
+  font-size:16px;
+}
+
+.result-place{
+  overflow:hidden;
+  margin-bottom:16px;
+  border:1px solid var(--border);
+  border-radius:19px;
+}
+
+.result-place-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:16px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--purple-soft),
+      #fff
+    );
+}
+
+.result-place-body{
+  padding:16px;
+}
+
+.result-item{
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.result-item:last-child{
+  border-bottom:0;
+}
+
+.result-item-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.consumer{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.65;
+}
+
+.person-result{
+  margin-bottom:13px;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:19px;
+}
+
+.person-result-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.balance{
+  padding:9px 11px;
+  border-radius:11px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.balance-owe{
+  color:#bd5757;
+  background:var(--red-soft);
+}
+
+.balance-receive{
+  color:#32806a;
+  background:var(--mint-soft);
+}
+
+.balance-zero{
+  color:#777180;
+  background:#f3f2f6;
+}
+
+.breakdown-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:7px 0;
+  font-size:13px;
+}
+
+.breakdown-row.total{
+  margin-top:5px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+  font-weight:900;
+}
+
+.transfer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #f4f0ff
+    );
+}
+
+.transfer-amount{
+  color:var(--purple-dark);
+  font-weight:900;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  z-index:9999;
+  transform:translateX(-50%);
+  padding:12px 18px;
+  border-radius:13px;
+  color:#fff;
+  background:#3d3854;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  font-size:13px;
+  font-weight:800;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:750px){
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .trip-grid,
+  .people-grid{
+    grid-template-columns:1fr;
+  }
+
+  .summary-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .container{
+    padding:20px 12px 55px;
+  }
+
+  .page-title{
+    font-size:25px;
+  }
+
+  .home-hero{
+    padding:23px;
+  }
+
+  .home-hero h1{
+    font-size:28px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  .place-header-row{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .bottom-actions{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .bottom-actions > .btn,
+  .bottom-actions > .btn-row{
+    width:100%;
+  }
+
+  .bottom-actions .btn-row .btn{
+    flex:1;
+  }
+
+  .result-total{
+    font-size:32px;
+  }
+}
+
+@media(max-width:430px){
+
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
+
+  .header{
+    padding:10px 11px 13px;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .home-button{
+    padding:8px 11px;
+    border-radius:14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <div class="logo">
+      Split Bill ✨
+      <small>Patungan jadi gampang.</small>
+    </div>
+
+    <button
+      type="button"
+      class="home-button"
+      onclick="goHome()">
+      🏠 Home
+    </button>
+
+  </div>
+
+  <div
+    id="progress"
+    class="progress">
+
+    <div
+      class="progress-bar"
+      data-step="1"></div>
+
+    <div
+      class="progress-bar"
+      data-step="2"></div>
+
+    <div
+      class="progress-bar"
+      data-step="3"></div>
+
+    <div
+      class="progress-bar"
+      data-step="4"></div>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+  <!-- HOME -->
+
+  <section id="homeView"></section>
+
+
+  <!-- ===================================================
+       STEP 1
+  ==================================================== -->
+
+  <section
+    id="step1"
+    class="step hidden">
+
+    <h1 class="page-title">
+      🧾 Detail Bill
+    </h1>
+
+    <p class="page-subtitle">
+      Isi informasi bill dan biaya yang sudah kamu ketahui.
+      Tidak perlu langsung lengkap — bisa disimpan sebagai Draft.
+    </p>
+
+
+    <div class="card bill-header-card">
+
+      <h2>
+        📋 Informasi Bill
+      </h2>
+
+      <div class="grid grid-2">
+
+        <div>
+
+          <label>
+            Nama Bill / Acara
+          </label>
+
+          <input
+            id="tripName"
+            type="text"
+            placeholder="Contoh: Bandung Trip">
+
+        </div>
+
+
+        <div>
+
+          <label>
+            Destinasi
+          </label>
+
+          <input
+            id="destination"
+            type="text"
+            placeholder="Contoh: Bandung">
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="section-head">
+
+      <div>
+
+        <h2>
+          🍜 Tempat & Biaya
+        </h2>
+
+        <div class="small">
+          Bisa lebih dari satu restoran/tempat.
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="addPlace()">
+
+        ＋ Tambah Tempat
+
+      </button>
+
+    </div>
+
+
+    <div id="step1Places"></div>
+
+
+    <div class="card">
+
+      <div class="help-box">
+
+        💡 <strong>Tips:</strong>
+        Kamu boleh berhenti kapan saja.
+        Klik <strong>💾 Simpan Draft & Kembali ke Home</strong>
+        untuk menyimpan data yang sudah dimasukkan.
+
+      </div>
+
+    </div>
+
+
+    <div class="bottom-actions">
+
+      <button
+        type="button"
+        class="btn btn-light"
+        onclick="goHome()">
+
+        ← Home
+
+      </button>
+
+
+      <div class="btn-row">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="saveDraftAndHome()">
+
+          💾 Simpan Draft & Kembali ke Home
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="goPeople()">
+
+          Lanjut ke Orang →
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       STEP 2
+  ==================================================== -->
+
+  <section
+    id="step2"
+    class="step hidden">
+
+    <h1 class="page-title">
+      👥 Orang
+    </h1>
+
+    <p class="page-subtitle">
+      Tambahkan orang yang ikut split bill.
+      Kalau belum lengkap, tidak masalah — simpan Draft saja.
+    </p>
+
+
+    <div class="card">
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>
+            Daftar Orang
+          </h2>
+
+          <div class="small">
+            Nama bisa ditambah atau diubah kapan saja.
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="addPerson()">
+
+          ＋ Tambah Orang
+
+        </button>
+
+      </div>
+
+
+      <div id="peopleContainer"></div>
+
+    </div>
+
+
+    <div class="bottom-actions">
+
+      <button
+        type="button"
+        class="btn btn-light"
+        onclick="showStep(1)">
+
+        ← Kembali
+
+      </button>
+
+
+      <div class="btn-row">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="saveDraftAndHome()">
+
+          💾 Simpan Draft & Kembali ke Home
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="goAssignment()">
+
+          Lanjut ke Pembagian →
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       STEP 3
+  ==================================================== -->
+
+  <section
+    id="step3"
+    class="step hidden">
+
+    <h1 class="page-title">
+      ☑️ Pembagian
+    </h1>
+
+    <p class="page-subtitle">
+      Tentukan siapa yang makan setiap menu dan siapa yang
+      membayar bill di masing-masing tempat.
+    </p>
+
+
+    <div id="assignmentContainer"></div>
+
+
+    <div class="card">
+
+      <h2>
+        💳 Payer
+      </h2>
+
+      <p class="small">
+        Pilih orang yang membayar terlebih dahulu di kasir.
+      </p>
+
+
+      <div id="payerContainer"></div>
+
+    </div>
+
+
+    <div id="validationContainer"></div>
+
+
+    <div class="bottom-actions">
+
+      <button
+        type="button"
+        class="btn btn-light"
+        onclick="showStep(2)">
+
+        ← Kembali
+
+      </button>
+
+
+      <div class="btn-row">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="saveDraftAndHome()">
+
+          💾 Simpan Draft & Kembali ke Home
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="goReview()">
+
+          Review →
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================
+       STEP 4
+  ==================================================== -->
+
+  <section
+    id="step4"
+    class="step hidden">
+
+    <h1 class="page-title">
+      🔍 Review
+    </h1>
+
+    <p class="page-subtitle">
+      Cek kembali sebelum bill dinyatakan selesai.
+    </p>
+
+
+    <div id="reviewContainer"></div>
+
+
+    <div id="reviewValidation"></div>
+
+
+    <div class="bottom-actions">
+
+      <button
+        type="button"
+        class="btn btn-light"
+        onclick="showStep(3)">
+
+        ← Kembali
+
+      </button>
+
+
+      <div class="btn-row">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          onclick="saveDraftAndHome()">
+
+          💾 Simpan Draft & Kembali ke Home
+
+        </button>
+
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="finalizeBill()">
+
+          ✨ Final & Lihat Hasil
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULT -->
+
+  <section
+    id="resultView"
+    class="hidden"></section>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const STORAGE_KEY =
+  "splitbill_trips_v21";
+
+
+/* =====================================================
+   GLOBAL STATE
+===================================================== */
+
+let trips = [];
+
+let currentTrip = null;
+
+let currentStep = 1;
+
+let isDirty = false;
+
+
+/* =====================================================
+   SAFE HELPERS
+===================================================== */
+
+function uid(prefix){
+
+  return (
+    prefix +
+    "_" +
+    Math.random()
+      .toString(36)
+      .slice(2,9) +
+    "_" +
+    Date.now()
+      .toString(36)
+  );
+
+}
+
+
+function n(value){
+
+  const result =
+    Number(value);
+
+  if(
+    Number.isFinite(result)
+  ){
+    return result;
+  }
+
+  return 0;
+
+}
+
+
+function money(value){
+
+  return new Intl.NumberFormat(
+    "id-ID",
+    {
+      style:"currency",
+      currency:"IDR",
+      maximumFractionDigits:0
+    }
+  ).format(
+    Math.round(n(value))
+  );
+
+}
+
+
+function esc(value){
+
+  return String(
+    value == null
+      ? ""
+      : value
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+function deepClone(value){
+
+  try{
+
+    return JSON.parse(
+      JSON.stringify(value)
+    );
+
+  }catch(error){
+
+    return null;
+
+  }
+
+}
+
+
+function now(){
+
+  return Date.now();
+
+}
+
+
+function formatDate(value){
+
+  if(!value){
+    return "-";
+  }
+
+  try{
+
+    return new Date(value)
+      .toLocaleString(
+        "id-ID",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric",
+          hour:"2-digit",
+          minute:"2-digit"
+        }
+      );
+
+  }catch(error){
+
+    return "-";
+
+  }
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function toast(message){
+
+  const existing =
+    document.querySelector(
+      ".toast"
+    );
+
+  if(existing){
+    existing.remove();
+  }
+
+
+  const element =
+    document.createElement(
+      "div"
+    );
+
+  element.className="toast";
+
+  element.textContent=message;
+
+  document.body.appendChild(
+    element
+  );
+
+
+  setTimeout(
+    function(){
+
+      if(element){
+        element.remove();
+      }
+
+    },
+    2200
+  );
+
+}
+
+
+/* =====================================================
+   CREATE DATA
+===================================================== */
+
+function createItem(){
+
+  return {
+
+    id:uid("item"),
+
+    name:"",
+
+    price:0,
+
+    qty:1,
+
+    consumers:[]
+
+  };
+
+}
+
+
+function createPlace(){
+
+  return {
+
+    id:uid("place"),
+
+    name:"",
+
+    discountPercent:0,
+
+    discountNominal:0,
+
+    servicePercent:0,
+
+    serviceNominal:0,
+
+    taxPercent:0,
+
+    taxNominal:0,
+
+    otherFee:0,
+
+    payerId:"",
+
+    items:[
+      createItem()
+    ]
+
+  };
+
+}
+
+
+function createTrip(){
+
+  return {
+
+    id:uid("trip"),
+
+    tripName:"",
+
+    destination:"",
+
+    createdAt:now(),
+
+    updatedAt:now(),
+
+    status:"draft",
+
+    places:[
+      createPlace()
+    ],
+
+    people:[]
+
+  };
+
+}
+
+
+/* =====================================================
+   NORMALIZE
+   Prevent old/broken data from crashing the app
+===================================================== */
+
+function normalizeTrip(raw){
+
+  const trip =
+    raw &&
+    typeof raw==="object"
+      ? raw
+      : createTrip();
+
+
+  if(!trip.id){
+    trip.id=uid("trip");
+  }
+
+
+  trip.tripName =
+    typeof trip.tripName==="string"
+      ? trip.tripName
+      : "";
+
+
+  trip.destination =
+    typeof trip.destination==="string"
+      ? trip.destination
+      : "";
+
+
+  trip.createdAt =
+    trip.createdAt ||
+    now();
+
+
+  trip.updatedAt =
+    trip.updatedAt ||
+    trip.createdAt ||
+    now();
+
+
+  trip.status =
+    trip.status==="completed"
+      ? "completed"
+      : "draft";
+
+
+  if(!Array.isArray(trip.places)){
+    trip.places=[];
+  }
+
+
+  if(trip.places.length===0){
+
+    trip.places.push(
+      createPlace()
+    );
+
+  }
+
+
+  trip.places =
+    trip.places.map(
+      function(rawPlace){
+
+        const place =
+          rawPlace &&
+          typeof rawPlace==="object"
+            ? rawPlace
+            : createPlace();
+
+
+        if(!place.id){
+          place.id=uid("place");
+        }
+
+
+        place.name =
+          typeof place.name==="string"
+            ? place.name
+            : "";
+
+
+        place.discountPercent =
+          n(place.discountPercent);
+
+
+        place.discountNominal =
+          n(place.discountNominal);
+
+
+        place.servicePercent =
+          n(place.servicePercent);
+
+
+        place.serviceNominal =
+          n(place.serviceNominal);
+
+
+        place.taxPercent =
+          n(place.taxPercent);
+
+
+        place.taxNominal =
+          n(place.taxNominal);
+
+
+        place.otherFee =
+          n(place.otherFee);
+
+
+        place.payerId =
+          typeof place.payerId==="string"
+            ? place.payerId
+            : "";
+
+
+        if(!Array.isArray(place.items)){
+          place.items=[];
+        }
+
+
+        if(place.items.length===0){
+
+          place.items.push(
+            createItem()
+          );
+
+        }
+
+
+        place.items =
+          place.items.map(
+            function(rawItem){
+
+              const item =
+                rawItem &&
+                typeof rawItem==="object"
+                  ? rawItem
+                  : createItem();
+
+
+              if(!item.id){
+                item.id=uid("item");
+              }
+
+
+              item.name =
+                typeof item.name==="string"
+                  ? item.name
+                  : "";
+
+
+              item.price=n(
+                item.price
+              );
+
+
+              item.qty =
+                Math.max(
+                  1,
+                  n(item.qty) || 1
+                );
+
+
+              if(!Array.isArray(item.consumers)){
+                item.consumers=[];
+              }
+
+
+              return item;
+
+            }
+          );
+
+
+        return place;
+
+      }
+    );
+
+
+  if(!Array.isArray(trip.people)){
+    trip.people=[];
+  }
+
+
+  trip.people =
+    trip.people.map(
+      function(rawPerson){
+
+        const person =
+          rawPerson &&
+          typeof rawPerson==="object"
+            ? rawPerson
+            : {
+                id:uid("person"),
+                name:""
+              };
+
+
+        if(!person.id){
+          person.id=uid("person");
+        }
+
+
+        person.name =
+          typeof person.name==="string"
+            ? person.name
+            : "";
+
+
+        return person;
+
+      }
+    );
+
+
+  return trip;
+
+}
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+function loadTrips(){
+
+  trips=[];
+
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
+
+
+    if(!raw){
+      return;
+    }
+
+
+    const parsed =
+      JSON.parse(raw);
+
+
+    if(!Array.isArray(parsed)){
+      return;
+    }
+
+
+    trips =
+      parsed
+        .map(normalizeTrip)
+        .filter(Boolean);
+
+
+  }catch(error){
+
+    console.warn(
+      "Split Bill storage reset:",
+      error
+    );
+
+    trips=[];
+
+  }
+
+}
+
+
+function saveTrips(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(trips)
+    );
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Cannot save Split Bill:",
+      error
+    );
+
+    alert(
+      "Data gagal disimpan di browser."
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   PLACE CALCULATION
+===================================================== */
+
+function calculatePlace(place){
+
+  const items =
+    Array.isArray(place.items)
+      ? place.items
+      : [];
+
+
+  const subtotal =
+    items.reduce(
+      function(total,item){
+
+        if(
+          !item ||
+          !String(
+            item.name || ""
+          ).trim()
+        ){
+          return total;
+        }
+
+
+        return (
+          total +
+          n(item.price) *
+          Math.max(
+            1,
+            n(item.qty)
+          )
+        );
+
+      },
+      0
+    );
+
+
+  const discount =
+    subtotal *
+    n(place.discountPercent) /
+    100
+    +
+    n(place.discountNominal);
+
+
+  const afterDiscount =
+    Math.max(
+      0,
+      subtotal-discount
+    );
+
+
+  /*
+    Service dan Tax dihitung berdasarkan
+    nominal setelah discount.
+  */
+
+  const service =
+    afterDiscount *
+    n(place.servicePercent) /
+    100
+    +
+    n(place.serviceNominal);
+
+
+  const tax =
+    afterDiscount *
+    n(place.taxPercent) /
+    100
+    +
+    n(place.taxNominal);
+
+
+  const other =
+    n(place.otherFee);
+
+
+  const total =
+    Math.max(
+      0,
+      afterDiscount +
+      service +
+      tax +
+      other
+    );
+
+
+  return {
+
+    subtotal,
+
+    discount,
+
+    afterDiscount,
+
+    service,
+
+    tax,
+
+    other,
+
+    total
+
+  };
+
+}
+
+
+function calculateTripTotal(trip){
+
+  if(
+    !trip ||
+    !Array.isArray(trip.places)
+  ){
+    return 0;
+  }
+
+
+  return trip.places.reduce(
+    function(total,place){
+
+      return (
+        total +
+        calculatePlace(place).total
+      );
+
+    },
+    0
+  );
+
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function renderHome(){
+
+  try{
+
+    const home =
+      document.getElementById(
+        "homeView"
+      );
+
+
+    if(!home){
+      return;
+    }
+
+
+    document
+      .querySelectorAll(".step")
+      .forEach(
+        function(element){
+
+          element.classList.add(
+            "hidden"
+          );
+
+        }
+      );
+
+
+    const result =
+      document.getElementById(
+        "resultView"
+      );
+
+
+    if(result){
+      result.classList.add(
+        "hidden"
+      );
+    }
+
+
+    const progress =
+      document.getElementById(
+        "progress"
+      );
+
+
+    if(progress){
+      progress.style.display="none";
+    }
+
+
+    let html=`
+
+      <div class="home-hero">
+
+        <h1>
+          Split Bill ✨
+        </h1>
+
+        <p class="page-subtitle">
+          Buat bill, simpan sebagai Draft,
+          lalu lengkapi sedikit demi sedikit.
+        </p>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="newTrip()">
+
+          ＋ Buat Split Bill Baru
+
+        </button>
+
+      </div>
+
+
+      <div class="section-head">
+
+        <div>
+
+          <h2>
+            Bill Kamu
+          </h2>
+
+          <div class="small">
+            ${
+              trips.length
+            }
+            bill tersimpan
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    if(trips.length===0){
+
+      html+=`
+
+        <div class="empty">
+
+          <div class="empty-icon">
+            🍰
+          </div>
+
+          <h2>
+            Belum ada Split Bill
+          </h2>
+
+          <p class="page-subtitle">
+            Buat bill pertama kamu.
+          </p>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="newTrip()">
+
+            ＋ Buat Split Bill
+
+          </button>
+
+        </div>
+
+      `;
+
+
+      home.innerHTML=html;
+
+      return;
+
+    }
+
+
+    const sorted =
+      trips
+        .slice()
+        .sort(
+          function(a,b){
+
+            return (
+              n(b.updatedAt) -
+              n(a.updatedAt)
+            );
+
+          }
+        );
+
+
+    html+=`
+
+      <div class="trip-grid">
+
+    `;
+
+
+    sorted.forEach(
+      function(trip){
+
+        const complete =
+          isTripComplete(
+            trip
+          );
+
+
+        const total =
+          calculateTripTotal(
+            trip
+          );
+
+
+        html+=`
+
+          <div class="trip-card">
+
+            <span class="badge ${
+              complete
+                ? "badge-complete"
+                : "badge-draft"
+            }">
+
+              ${
+                complete
+                  ? "✓ Selesai"
+                  : "📝 Draft"
+              }
+
+            </span>
+
+
+            <h3>
+
+              ${esc(
+                trip.tripName ||
+                "Untitled Split Bill"
+              )}
+
+            </h3>
+
+
+            <div class="trip-destination">
+
+              📍 ${
+                esc(
+                  trip.destination ||
+                  "Destinasi belum diisi"
+                )
+              }
+
+            </div>
+
+
+            <div class="trip-total">
+
+              ${money(total)}
+
+            </div>
+
+
+            <div class="trip-stats">
+
+              <span class="badge badge-purple">
+
+                🍜 ${
+                  trip.places.length
+                }
+                tempat
+
+              </span>
+
+
+              <span class="badge badge-purple">
+
+                👥 ${
+                  trip.people.length
+                }
+                orang
+
+              </span>
+
+            </div>
+
+
+            <div class="trip-date">
+
+              Terakhir diubah:
+              ${
+                formatDate(
+                  trip.updatedAt
+                )
+              }
+
+            </div>
+
+
+            <div class="btn-row">
+
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="openTrip('${trip.id}')">
+
+                ✏️ ${
+                  complete
+                    ? "Edit"
+                    : "Lanjutkan"
+                }
+
+              </button>
+
+
+              ${
+                complete
+                  ? `
+
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      onclick="viewResult('${trip.id}')">
+
+                      📊 Hasil
+
+                    </button>
+
+                  `
+                  : ""
+              }
+
+
+              <button
+                type="button"
+                class="btn btn-danger"
+                onclick="deleteTrip('${trip.id}')">
+
+                🗑️
+
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    html+=`
+
+      </div>
+
+    `;
+
+
+    home.innerHTML=html;
+
+  }catch(error){
+
+    console.error(
+      "renderHome error:",
+      error
+    );
+
+
+    const home =
+      document.getElementById(
+        "homeView"
+      );
+
+
+    if(home){
+
+      home.innerHTML=`
+
+        <div class="card">
+
+          <div class="alert alert-danger">
+
+            Home mengalami error.
+            Data aman, tetapi halaman perlu
+            dimuat ulang.
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="location.reload()">
+
+            🔄 Muat Ulang
+
+          </button>
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   NEW TRIP
+===================================================== */
+
+function newTrip(){
+
+  currentTrip =
+    createTrip();
+
+  currentStep=1;
+
+  isDirty=true;
+
+  showStep(1);
+
+}
+
+
+/* =====================================================
+   OPEN
+===================================================== */
+
+function openTrip(id){
+
+  const found =
+    trips.find(
+      function(trip){
+
+        return trip.id===id;
+
+      }
+    );
+
+
+  if(!found){
+
+    alert(
+      "Bill tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  currentTrip =
+    normalizeTrip(
+      deepClone(found)
+    );
+
+
+  currentStep=1;
+
+  isDirty=false;
+
+  showStep(1);
+
+}
+
+
+/* =====================================================
+   SAVE CURRENT
+===================================================== */
+
+function persistCurrentTrip(){
+
+  if(!currentTrip){
+    return false;
+  }
+
+
+  currentTrip =
+    normalizeTrip(
+      currentTrip
+    );
+
+
+  currentTrip.updatedAt=
+    now();
+
+
+  const index =
+    trips.findIndex(
+      function(trip){
+
+        return (
+          trip.id===
+          currentTrip.id
+        );
+
+      }
+    );
+
+
+  if(index===-1){
+
+    trips.push(
+      deepClone(
+        currentTrip
+      )
+    );
+
+  }else{
+
+    trips[index]=
+      deepClone(
+        currentTrip
+      );
+
+  }
+
+
+  const success =
+    saveTrips();
+
+
+  if(success){
+
+    isDirty=false;
+
+  }
+
+
+  return success;
+
+}
+
+
+/* =====================================================
+   SAVE DRAFT
+===================================================== */
+
+function saveDraftAndHome(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  syncHeader();
+
+
+  currentTrip.status="draft";
+
+
+  const success =
+    persistCurrentTrip();
+
+
+  if(!success){
+    return;
+  }
+
+
+  currentTrip=null;
+
+  isDirty=false;
+
+
+  renderHome();
+
+
+  toast(
+    "Draft berhasil disimpan 💾"
+  );
+
+}
+
+
+/* =====================================================
+   HOME
+===================================================== */
+
+function goHome(){
+
+  if(
+    currentTrip &&
+    isDirty
+  ){
+
+    const confirmLeave =
+      confirm(
+        "Ada perubahan yang belum disimpan.\n\n" +
+        "Kembali ke Home tanpa menyimpan?"
+      );
+
+
+    if(!confirmLeave){
+      return;
+    }
+
+  }
+
+
+  currentTrip=null;
+
+  isDirty=false;
+
+  renderHome();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showStep(step){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  currentStep=step;
+
+
+  const home =
+    document.getElementById(
+      "homeView"
+    );
+
+
+  if(home){
+    home.classList.add(
+      "hidden"
+    );
+  }
+
+
+  const result =
+    document.getElementById(
+      "resultView"
+    );
+
+
+  if(result){
+    result.classList.add(
+      "hidden"
+    );
+  }
+
+
+  document
+    .querySelectorAll(".step")
+    .forEach(
+      function(element){
+
+        element.classList.add(
+          "hidden"
+        );
+
+      }
+    );
+
+
+  const selected =
+    document.getElementById(
+      "step"+step
+    );
+
+
+  if(selected){
+
+    selected.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  const progress =
+    document.getElementById(
+      "progress"
+    );
+
+
+  if(progress){
+
+    progress.style.display="flex";
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".progress-bar"
+    )
+    .forEach(
+      function(bar){
+
+        const stepNumber =
+          Number(
+            bar.dataset.step
+          );
+
+
+        bar.classList.toggle(
+          "active",
+          stepNumber<=step
+        );
+
+      }
+    );
+
+
+  if(step===1){
+
+    renderStep1();
+
+  }
+
+
+  if(step===2){
+
+    renderPeople();
+
+  }
+
+
+  if(step===3){
+
+    renderAssignment();
+
+    renderPayers();
+
+    renderValidation();
+
+  }
+
+
+  if(step===4){
+
+    renderReview();
+
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function goPeople(){
+
+  syncHeader();
+
+  showStep(2);
+
+}
+
+
+function goAssignment(){
+
+  syncHeader();
+
+  showStep(3);
+
+}
+
+
+function goReview(){
+
+  syncHeader();
+
+  showStep(4);
+
+}
+
+
+/* =====================================================
+   HEADER SYNC
+===================================================== */
+
+function syncHeader(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const name =
+    document.getElementById(
+      "tripName"
+    );
+
+
+  const destination =
+    document.getElementById(
+      "destination"
+    );
+
+
+  if(name){
+
+    currentTrip.tripName =
+      name.value.trim();
+
+  }
+
+
+  if(destination){
+
+    currentTrip.destination =
+      destination.value.trim();
+
+  }
+
+
+  isDirty=true;
+
+}
+
+
+/* =====================================================
+   STEP 1
+===================================================== */
+
+function renderStep1(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const name =
+    document.getElementById(
+      "tripName"
+    );
+
+
+  const destination =
+    document.getElementById(
+      "destination"
+    );
+
+
+  if(name){
+
+    name.value =
+      currentTrip.tripName || "";
+
+  }
+
+
+  if(destination){
+
+    destination.value =
+      currentTrip.destination || "";
+
+  }
+
+
+  renderStep1Places();
+
+}
+
+
+function renderStep1Places(){
+
+  const container =
+    document.getElementById(
+      "step1Places"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  container.innerHTML =
+    currentTrip.places
+      .map(
+        function(place,index){
+
+          return renderPlace(
+            place,
+            index
+          );
+
+        }
+      )
+      .join("");
+
+}
+
+
+/* =====================================================
+   PLACE
+===================================================== */
+
+function addPlace(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  currentTrip.places.push(
+    createPlace()
+  );
+
+
+  isDirty=true;
+
+
+  if(currentStep===1){
+
+    renderStep1Places();
+
+  }
+
+}
+
+
+function removePlace(placeId){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  if(
+    currentTrip.places.length<=1
+  ){
+
+    alert(
+      "Minimal harus ada 1 tempat."
+    );
+
+    return;
+
+  }
+
+
+  const yes =
+    confirm(
+      "Hapus tempat ini beserta semua menunya?"
+    );
+
+
+  if(!yes){
+    return;
+  }
+
+
+  currentTrip.places =
+    currentTrip.places.filter(
+      function(place){
+
+        return place.id!==placeId;
+
+      }
+    );
+
+
+  isDirty=true;
+
+
+  renderStep1Places();
+
+}
+
+
+function updatePlace(
+  placeId,
+  field,
+  value
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  if(field==="name"){
+
+    place.name =
+      String(
+        value || ""
+      );
+
+  }else{
+
+    place[field]=
+      Math.max(
+        0,
+        n(value)
+      );
+
+  }
+
+
+  isDirty=true;
+
+}
+
+
+/* =====================================================
+   PLACE HTML
+===================================================== */
+
+function renderPlace(
+  place,
+  index
+){
+
+  const calc =
+    calculatePlace(
+      place
+    );
+
+
+  return `
+
+    <div class="place-card">
+
+      <div class="place-header">
+
+        <div class="place-header-row">
+
+          <div style="flex:1">
+
+            <div class="small">
+              Tempat ${index+1}
+            </div>
+
+
+            <input
+              style="margin-top:5px;font-weight:800"
+              type="text"
+              value="${esc(place.name)}"
+              placeholder="Contoh: Cafe / Restoran"
+              onchange="
+                updatePlace(
+                  '${place.id}',
+                  'name',
+                  this.value
+                )
+              "
+            >
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn btn-danger"
+            onclick="
+              removePlace(
+                '${place.id}'
+              )
+            ">
+
+            🗑️ Hapus
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="place-body">
+
+
+        <!-- MENU -->
+
+        <div class="menu-section">
+
+          <div class="section-head">
+
+            <div>
+
+              <h3>
+                🍽️ Menu
+              </h3>
+
+              <div class="small">
+                Isi menu dan harga jika sudah tahu.
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="
+                addItem(
+                  '${place.id}'
+                )
+              ">
+
+              ＋ Tambah Menu
+
+            </button>
+
+          </div>
+
+
+          ${
+            place.items
+              .map(
+                function(item){
+
+                  return renderItem(
+                    place,
+                    item
+                  );
+
+                }
+              )
+              .join("")
+          }
+
+        </div>
+
+
+        <!-- FEES -->
+
+        <div class="fee-box">
+
+          <div class="section-head">
+
+            <div>
+
+              <h3>
+                💸 Tambahan & Pajak
+              </h3>
+
+              <div class="small">
+                Isi salah satu atau keduanya jika diperlukan.
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="grid grid-3">
+
+
+            <div>
+
+              <label>
+                Discount %
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value="${n(place.discountPercent)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'discountPercent',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Discount Nominal
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                value="${n(place.discountNominal)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'discountNominal',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Service %
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value="${n(place.servicePercent)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'servicePercent',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Service Nominal
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                value="${n(place.serviceNominal)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'serviceNominal',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Tax / PPN %
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value="${n(place.taxPercent)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'taxPercent',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Tax / PPN Nominal
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                value="${n(place.taxNominal)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'taxNominal',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Biaya Lainnya
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                value="${n(place.otherFee)}"
+                onchange="
+                  updatePlace(
+                    '${place.id}',
+                    'otherFee',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- BREAKDOWN -->
+
+        <div class="cost-table">
+
+          <div class="cost-row subtotal">
+
+            <span>
+              Subtotal
+            </span>
+
+            <strong>
+              ${money(calc.subtotal)}
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row">
+
+            <span>
+              Discount
+            </span>
+
+            <strong class="cost-negative">
+
+              ${
+                calc.discount>0
+                  ? "- "
+                  : ""
+              }
+
+              ${money(calc.discount)}
+
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row">
+
+            <span>
+              Setelah Discount
+            </span>
+
+            <strong>
+              ${money(calc.afterDiscount)}
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row">
+
+            <span>
+              Service Charge
+            </span>
+
+            <strong class="cost-positive">
+
+              ${
+                calc.service>0
+                  ? "+ "
+                  : ""
+              }
+
+              ${money(calc.service)}
+
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row">
+
+            <span>
+              Tax / PPN
+            </span>
+
+            <strong class="cost-positive">
+
+              ${
+                calc.tax>0
+                  ? "+ "
+                  : ""
+              }
+
+              ${money(calc.tax)}
+
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row">
+
+            <span>
+              Biaya Lainnya
+            </span>
+
+            <strong class="cost-positive">
+
+              ${
+                calc.other>0
+                  ? "+ "
+                  : ""
+              }
+
+              ${money(calc.other)}
+
+            </strong>
+
+          </div>
+
+
+          <div class="cost-row total">
+
+            <span>
+              TOTAL
+            </span>
+
+            <strong>
+              ${money(calc.total)}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="place-total">
+
+          <span>
+            Total Tempat
+          </span>
+
+          <strong>
+            ${money(calc.total)}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   ITEM HTML
+===================================================== */
+
+function renderItem(
+  place,
+  item
+){
+
+  const total =
+    n(item.price) *
+    Math.max(
+      1,
+      n(item.qty)
+    );
+
+
+  return `
+
+    <div class="menu-card">
+
+      <div class="menu-top">
+
+        <div class="menu-main">
+
+          <input
+            type="text"
+            value="${esc(item.name)}"
+            placeholder="Nama menu"
+            onchange="
+              updateItem(
+                '${place.id}',
+                '${item.id}',
+                'name',
+                this.value
+              )
+            "
+          >
+
+
+          <div
+            class="grid grid-2"
+            style="margin-top:10px">
+
+            <div>
+
+              <label>
+                Harga
+              </label>
+
+              <input
+                type="number"
+                min="0"
+                value="${n(item.price)}"
+                onchange="
+                  updateItem(
+                    '${place.id}',
+                    '${item.id}',
+                    'price',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+
+            <div>
+
+              <label>
+                Quantity
+              </label>
+
+              <input
+                type="number"
+                min="1"
+                value="${Math.max(1,n(item.qty))}"
+                onchange="
+                  updateItem(
+                    '${place.id}',
+                    '${item.id}',
+                    'qty',
+                    this.value
+                  );
+                  renderStep1Places()
+                "
+              >
+
+            </div>
+
+          </div>
+
+
+          <div class="menu-price-total">
+
+            Total:
+            ${money(total)}
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          onclick="
+            removeItem(
+              '${place.id}',
+              '${item.id}'
+            )
+          ">
+
+          🗑️
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   ITEM
+===================================================== */
+
+function addItem(placeId){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  place.items.push(
+    createItem()
+  );
+
+
+  isDirty=true;
+
+
+  if(currentStep===1){
+
+    renderStep1Places();
+
+  }
+
+}
+
+
+function removeItem(
+  placeId,
+  itemId
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  if(place.items.length<=1){
+
+    alert(
+      "Minimal harus ada 1 menu."
+    );
+
+    return;
+
+  }
+
+
+  place.items =
+    place.items.filter(
+      function(item){
+
+        return item.id!==itemId;
+
+      }
+    );
+
+
+  isDirty=true;
+
+  renderStep1Places();
+
+}
+
+
+function updateItem(
+  placeId,
+  itemId,
+  field,
+  value
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  const item =
+    place.items.find(
+      function(element){
+
+        return element.id===itemId;
+
+      }
+    );
+
+
+  if(!item){
+    return;
+  }
+
+
+  if(field==="name"){
+
+    item.name =
+      String(
+        value || ""
+      );
+
+  }else if(field==="qty"){
+
+    item.qty =
+      Math.max(
+        1,
+        n(value) || 1
+      );
+
+  }else{
+
+    item[field]=
+      Math.max(
+        0,
+        n(value)
+      );
+
+  }
+
+
+  isDirty=true;
+
+}
+
+
+/* =====================================================
+   PEOPLE
+===================================================== */
+
+function addPerson(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  currentTrip.people.push({
+
+    id:uid("person"),
+
+    name:""
+
+  });
+
+
+  isDirty=true;
+
+  renderPeople();
+
+}
+
+
+function updatePerson(
+  personId,
+  value
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const person =
+    currentTrip.people.find(
+      function(item){
+
+        return item.id===personId;
+
+      }
+    );
+
+
+  if(!person){
+    return;
+  }
+
+
+  person.name =
+    String(
+      value || ""
+    );
+
+
+  isDirty=true;
+
+}
+
+
+function removePerson(
+  personId
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const yes =
+    confirm(
+      "Hapus orang ini?\n\n" +
+      "Pembagian menu orang tersebut juga akan dihapus."
+    );
+
+
+  if(!yes){
+    return;
+  }
+
+
+  currentTrip.people =
+    currentTrip.people.filter(
+      function(person){
+
+        return person.id!==personId;
+
+      }
+    );
+
+
+  currentTrip.places.forEach(
+    function(place){
+
+      place.items.forEach(
+        function(item){
+
+          item.consumers =
+            Array.isArray(
+              item.consumers
+            )
+              ? item.consumers.filter(
+                  function(id){
+
+                    return id!==personId;
+
+                  }
+                )
+              : [];
+
+        }
+      );
+
+
+      if(
+        place.payerId===
+        personId
+      ){
+
+        place.payerId="";
+
+      }
+
+    }
+  );
+
+
+  isDirty=true;
+
+  renderPeople();
+
+}
+
+
+function renderPeople(){
+
+  const container =
+    document.getElementById(
+      "peopleContainer"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(
+    !currentTrip ||
+    currentTrip.people.length===0
+  ){
+
+    container.innerHTML=`
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          👥
+        </div>
+
+        <h3>
+          Belum ada orang
+        </h3>
+
+        <p class="small">
+          Tidak masalah. Bisa ditambahkan nanti.
+        </p>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="addPerson()">
+
+          ＋ Tambah Orang
+
+        </button>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  container.innerHTML=`
+
+    <div class="people-grid">
+
+      ${
+        currentTrip.people
+          .map(
+            function(person,index){
+
+              return `
+
+                <div class="person-card">
+
+                  <div class="avatar">
+
+                    ${
+                      index%2===0
+                        ? "👩"
+                        : "👨"
+                    }
+
+                  </div>
+
+
+                  <input
+                    class="person-input"
+                    type="text"
+                    value="${esc(person.name)}"
+                    placeholder="Nama orang"
+                    onchange="
+                      updatePerson(
+                        '${person.id}',
+                        this.value
+                      )
+                    "
+                  >
+
+
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    style="padding:9px 11px"
+                    onclick="
+                      removePerson(
+                        '${person.id}'
+                      )
+                    ">
+
+                    🗑️
+
+                  </button>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("")
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   ASSIGNMENT
+===================================================== */
+
+function toggleConsumer(
+  placeId,
+  itemId,
+  personId,
+  checked
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  const item =
+    place.items.find(
+      function(element){
+
+        return element.id===itemId;
+
+      }
+    );
+
+
+  if(!item){
+    return;
+  }
+
+
+  if(!Array.isArray(item.consumers)){
+
+    item.consumers=[];
+
+  }
+
+
+  if(checked){
+
+    if(
+      !item.consumers.includes(
+        personId
+      )
+    ){
+
+      item.consumers.push(
+        personId
+      );
+
+    }
+
+  }else{
+
+    item.consumers =
+      item.consumers.filter(
+        function(id){
+
+          return id!==personId;
+
+        }
+      );
+
+  }
+
+
+  isDirty=true;
+
+  renderAssignment();
+
+  renderValidation();
+
+}
+
+
+function renderAssignment(){
+
+  const container =
+    document.getElementById(
+      "assignmentContainer"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(
+    !currentTrip ||
+    currentTrip.people.length===0
+  ){
+
+    container.innerHTML=`
+
+      <div class="alert alert-warning">
+
+        👥 <strong>Belum ada orang.</strong><br>
+
+        Tambahkan orang di Step 2 terlebih dahulu.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html="";
+
+
+  currentTrip.places.forEach(
+    function(place){
+
+      const items =
+        place.items.filter(
+          function(item){
+
+            return String(
+              item.name || ""
+            ).trim()!=="";
+
+          }
+        );
+
+
+      if(items.length===0){
+        return;
+      }
+
+
+      html+=`
+
+        <div class="card assignment-place">
+
+          <h2>
+
+            🍜 ${
+              esc(
+                place.name ||
+                "Tempat tanpa nama"
+              )
+            }
+
+          </h2>
+
+
+          ${
+            items
+              .map(
+                function(item){
+
+                  return `
+
+                    <div class="assignment-item">
+
+                      <div class="assignment-title">
+
+                        ${esc(item.name)}
+
+                        <span class="small">
+
+                          —
+                          ${money(
+                            n(item.price) *
+                            Math.max(
+                              1,
+                              n(item.qty)
+                            )
+                          )}
+
+                        </span>
+
+                      </div>
+
+
+                      <div
+                        class="small"
+                        style="margin-bottom:9px">
+
+                        Siapa yang makan?
+
+                      </div>
+
+
+                      <div class="checkbox-grid">
+
+                        ${
+                          currentTrip.people
+                            .map(
+                              function(person){
+
+                                const selected =
+                                  Array.isArray(
+                                    item.consumers
+                                  ) &&
+                                  item.consumers.includes(
+                                    person.id
+                                  );
+
+
+                                return `
+
+                                  <label
+                                    class="check-label ${
+                                      selected
+                                        ? "selected"
+                                        : ""
+                                    }">
+
+                                    <input
+                                      type="checkbox"
+                                      ${
+                                        selected
+                                          ? "checked"
+                                          : ""
+                                      }
+                                      onchange="
+                                        toggleConsumer(
+                                          '${place.id}',
+                                          '${item.id}',
+                                          '${person.id}',
+                                          this.checked
+                                        )
+                                      "
+                                    >
+
+                                    ${esc(
+                                      person.name ||
+                                      "Tanpa Nama"
+                                    )}
+
+                                  </label>
+
+                                `;
+
+                              }
+                            )
+                            .join("")
+                        }
+
+                      </div>
+
+
+                      ${
+                        !Array.isArray(
+                          item.consumers
+                        ) ||
+                        item.consumers.length===0
+                          ? `
+
+                            <div
+                              class="small"
+                              style="
+                                margin-top:9px;
+                                color:#b96e32">
+
+                              ⚠️ Belum ada yang dipilih.
+
+                            </div>
+
+                          `
+                          : ""
+                      }
+
+                    </div>
+
+                  `;
+
+                }
+              )
+              .join("")
+          }
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  if(!html){
+
+    html=`
+
+      <div class="alert alert-warning">
+
+        🍽️ Belum ada menu yang memiliki nama.
+        Tambahkan menu di Step 1.
+
+      </div>
+
+    `;
+
+  }
+
+
+  container.innerHTML=html;
+
+}
+
+
+/* =====================================================
+   PAYER
+===================================================== */
+
+function setPayer(
+  placeId,
+  personId
+){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  const place =
+    currentTrip.places.find(
+      function(item){
+
+        return item.id===placeId;
+
+      }
+    );
+
+
+  if(!place){
+    return;
+  }
+
+
+  place.payerId =
+    personId || "";
+
+
+  isDirty=true;
+
+  renderValidation();
+
+}
+
+
+function renderPayers(){
+
+  const container =
+    document.getElementById(
+      "payerContainer"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  if(
+    !currentTrip ||
+    currentTrip.people.length===0
+  ){
+
+    container.innerHTML=`
+
+      <div class="alert alert-info">
+
+        Tambahkan orang terlebih dahulu.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html="";
+
+
+  currentTrip.places.forEach(
+    function(place){
+
+      const hasMenu =
+        place.items.some(
+          function(item){
+
+            return String(
+              item.name || ""
+            ).trim()!=="";
+
+          }
+        );
+
+
+      if(!hasMenu){
+        return;
+      }
+
+
+      html+=`
+
+        <div style="margin-bottom:14px">
+
+          <label>
+
+            ${esc(
+              place.name ||
+              "Tempat tanpa nama"
+            )}
+
+          </label>
+
+
+          <select
+            onchange="
+              setPayer(
+                '${place.id}',
+                this.value
+              )
+            ">
+
+            <option value="">
+              -- Belum ditentukan --
+            </option>
+
+
+            ${
+              currentTrip.people
+                .map(
+                  function(person){
+
+                    return `
+
+                      <option
+                        value="${person.id}"
+                        ${
+                          place.payerId===
+                          person.id
+                            ? "selected"
+                            : ""
+                        }>
+
+                        ${esc(
+                          person.name ||
+                          "Tanpa Nama"
+                        )}
+
+                      </option>
+
+                    `;
+
+                  }
+                )
+                .join("")
+            }
+
+          </select>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  if(!html){
+
+    html=`
+
+      <div class="alert alert-info">
+
+        Belum ada tempat yang memiliki menu.
+
+      </div>
+
+    `;
+
+  }
+
+
+  container.innerHTML=html;
+
+}
+
+
+/* =====================================================
+   VALIDATION
+===================================================== */
+
+function getValidation(){
+
+  const unassigned=[];
+
+  const missingPayers=[];
+
+  const emptyNames=[];
+
+
+  if(
+    !currentTrip
+  ){
+
+    return {
+
+      unassigned:[],
+
+      missingPayers:[],
+
+      emptyNames:[]
+
+    };
+
+  }
+
+
+  currentTrip.people.forEach(
+    function(person){
+
+      if(
+        !String(
+          person.name || ""
+        ).trim()
+      ){
+
+        emptyNames.push(
+          person.id
+        );
+
+      }
+
+    }
+  );
+
+
+  currentTrip.places.forEach(
+    function(place){
+
+      const items =
+        place.items.filter(
+          function(item){
+
+            return String(
+              item.name || ""
+            ).trim()!=="";
+
+          }
+        );
+
+
+      if(items.length===0){
+        return;
+      }
+
+
+      if(!place.payerId){
+
+        missingPayers.push(
+          place.name ||
+          "Tempat tanpa nama"
+        );
+
+      }
+
+
+      items.forEach(
+        function(item){
+
+          if(
+            !Array.isArray(
+              item.consumers
+            ) ||
+            item.consumers.length===0
+          ){
+
+            unassigned.push({
+
+              place:
+                place.name ||
+                "Tempat tanpa nama",
+
+              item:item.name
+
+            });
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  return {
+
+    unassigned,
+
+    missingPayers,
+
+    emptyNames
+
+  };
+
+}
+
+
+function renderValidation(){
+
+  const container =
+    document.getElementById(
+      "validationContainer"
+    );
+
+
+  if(!container){
+    return;
+  }
+
+
+  const validation =
+    getValidation();
+
+
+  if(
+    currentTrip.people.length>0 &&
+    validation.emptyNames.length===0 &&
+    validation.unassigned.length===0 &&
+    validation.missingPayers.length===0
+  ){
+
+    container.innerHTML=`
+
+      <div class="alert alert-success">
+
+        ✓ <strong>Data sudah lengkap.</strong><br>
+
+        Semua menu sudah memiliki konsumen
+        dan semua tempat sudah memiliki payer.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let html=`
+
+    <div class="alert alert-warning">
+
+      <strong>
+        📝 Masih ada yang perlu dilengkapi
+      </strong>
+
+  `;
+
+
+  if(
+    currentTrip.people.length===0
+  ){
+
+    html+=`
+
+      <br>• Belum ada orang.
+
+    `;
+
+  }
+
+
+  if(
+    validation.emptyNames.length>0
+  ){
+
+    html+=`
+
+      <br>• Ada orang yang belum diberi nama.
+
+    `;
+
+  }
+
+
+  if(
+    validation.unassigned.length>0
+  ){
+
+    html+=`
+
+      <br>• ${
+        validation.unassigned.length
+      }
+      menu belum memiliki konsumen.
+
+    `;
+
+  }
+
+
+  if(
+    validation.missingPayers.length>0
+  ){
+
+    html+=`
+
+      <br>• ${
+        validation.missingPayers.length
+      }
+      tempat belum memiliki payer.
+
+    `;
+
+  }
+
+
+  html+=`
+
+    </div>
+
+  `;
+
+
+  container.innerHTML=html;
+
+}
+
+
+/* =====================================================
+   COMPLETE CHECK
+===================================================== */
+
+function isTripComplete(
+  trip
+){
+
+  if(
+    !trip ||
+    !Array.isArray(trip.people) ||
+    trip.people.length===0
+  ){
+
+    return false;
+
+  }
+
+
+  for(
+    const person of trip.people
+  ){
+
+    if(
+      !String(
+        person.name || ""
+      ).trim()
+    ){
+
+      return false;
+
+    }
+
+  }
+
+
+  let hasMenu=false;
+
+
+  for(
+    const place of trip.places
+  ){
+
+    const items =
+      place.items.filter(
+        function(item){
+
+          return String(
+            item.name || ""
+          ).trim()!=="";
+
+        }
+      );
+
+
+    if(items.length===0){
+      continue;
+    }
+
+
+    hasMenu=true;
+
+
+    if(!place.payerId){
+      return false;
+    }
+
+
+    for(
+      const item of items
+    ){
+
+      if(
+        !Array.isArray(
+          item.consumers
+        ) ||
+        item.consumers.length===0
+      ){
+
+        return false;
+
+      }
+
+    }
+
+  }
+
+
+  return hasMenu;
+
+}
+
+
+/* =====================================================
+   REVIEW
+===================================================== */
+
+function renderReview(){
+
+  const container =
+    document.getElementById(
+      "reviewContainer"
+    );
+
+
+  const validationBox =
+    document.getElementById(
+      "reviewValidation"
+    );
+
+
+  if(
+    !container ||
+    !validationBox ||
+    !currentTrip
+  ){
+    return;
+  }
+
+
+  const total =
+    calculateTripTotal(
+      currentTrip
+    );
+
+
+  const validation =
+    getValidation();
+
+
+  let peopleTotal=0;
+
+
+  currentTrip.people.forEach(
+    function(person){
+
+      let personTotal=0;
+
+
+      currentTrip.places.forEach(
+        function(place){
+
+          place.items.forEach(
+            function(item){
+
+              if(
+                !Array.isArray(
+                  item.consumers
+                ) ||
+                !item.consumers.includes(
+                  person.id
+                )
+              ){
+
+                return;
+
+              }
+
+
+              const consumers =
+                item.consumers.length;
+
+
+              const itemBase =
+                n(item.price) *
+                Math.max(
+                  1,
+                  n(item.qty)
+                );
+
+
+              const placeCalc =
+                calculatePlace(
+                  place
+                );
+
+
+              const placeSubtotal =
+                placeCalc.subtotal;
+
+
+              if(
+                placeSubtotal<=0 ||
+                consumers<=0
+              ){
+
+                return;
+
+              }
+
+
+              /*
+                Estimasi review.
+                Perhitungan final memakai
+                fungsi buildResult().
+              */
+
+              const itemShare =
+                placeCalc.total *
+                itemBase /
+                placeSubtotal /
+                consumers;
+
+
+              personTotal +=
+                itemShare;
+
+            }
+          );
+
+        }
+      );
+
+
+      peopleTotal +=
+        personTotal;
+
+    }
+  );
+
+
+  container.innerHTML=`
+
+    <div class="card">
+
+      <h2>
+        ${esc(
+          currentTrip.tripName ||
+          "Untitled Split Bill"
+        )}
+      </h2>
+
+
+      <div class="small">
+
+        📍 ${
+          esc(
+            currentTrip.destination ||
+            "Destinasi belum diisi"
+          )
+        }
+
+      </div>
+
+
+      <div class="summary-grid"
+        style="margin-top:17px">
+
+        <div class="summary-box">
+
+          <small>
+            Total Bill
+          </small>
+
+          <strong>
+            ${money(total)}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Tempat
+          </small>
+
+          <strong>
+            ${currentTrip.places.length}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Orang
+          </small>
+
+          <strong>
+            ${currentTrip.people.length}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Status
+          </small>
+
+          <strong>
+            Draft
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        🧾 Ringkasan Tempat
+      </h2>
+
+
+      ${
+        currentTrip.places
+          .map(
+            function(place){
+
+              const calc =
+                calculatePlace(
+                  place
+                );
+
+
+              return `
+
+                <div
+                  class="breakdown-row">
+
+                  <span>
+
+                    🍜 ${
+                      esc(
+                        place.name ||
+                        "Tempat tanpa nama"
+                      )
+                    }
+
+                  </span>
+
+                  <strong>
+
+                    ${money(
+                      calc.total
+                    )}
+
+                  </strong>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("")
+      }
+
+
+      <div
+        class="breakdown-row total">
+
+        <span>
+          TOTAL
+        </span>
+
+        <strong>
+          ${money(total)}
+        </strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  if(
+    isTripComplete(
+      currentTrip
+    )
+  ){
+
+    validationBox.innerHTML=`
+
+      <div class="alert alert-success">
+
+        ✓ <strong>Semua sudah lengkap.</strong><br>
+
+        Bill siap difinalkan.
+
+      </div>
+
+    `;
+
+  }else{
+
+    let message=`
+
+      <div class="alert alert-warning">
+
+        <strong>
+          📝 Bill belum lengkap
+        </strong>
+
+    `;
+
+
+    if(
+      validation.emptyNames.length
+    ){
+
+      message+=`
+        <br>• Ada nama orang yang kosong.
+      `;
+
+    }
+
+
+    if(
+      validation.unassigned.length
+    ){
+
+      message+=`
+
+        <br>• Ada ${
+          validation.unassigned.length
+        }
+        menu yang belum dibagi.
+
+      `;
+
+    }
+
+
+    if(
+      validation.missingPayers.length
+    ){
+
+      message+=`
+
+        <br>• Ada ${
+          validation.missingPayers.length
+        }
+        tempat yang belum punya payer.
+
+      `;
+
+    }
+
+
+    message+=`
+
+      </div>
+
+    `;
+
+
+    validationBox.innerHTML=
+      message;
+
+  }
+
+}
+
+
+/* =====================================================
+   FINALIZE
+===================================================== */
+
+function finalizeBill(){
+
+  if(!currentTrip){
+    return;
+  }
+
+
+  syncHeader();
+
+
+  if(
+    !isTripComplete(
+      currentTrip
+    )
+  ){
+
+    alert(
+      "Bill belum lengkap.\n\n" +
+      "Pastikan:\n" +
+      "• Semua orang sudah diberi nama\n" +
+      "• Setiap menu memiliki konsumen\n" +
+      "• Setiap tempat memiliki payer\n\n" +
+      "Kalau belum tahu semuanya, gunakan Simpan Draft."
+    );
+
+    return;
+
+  }
+
+
+  currentTrip.status="completed";
+
+
+  const success =
+    persistCurrentTrip();
+
+
+  if(!success){
+    return;
+  }
+
+
+  renderResult();
+
+  showResult();
+
+}
+
+
+/* =====================================================
+   RESULT CALCULATION
+===================================================== */
+
+function allocateInteger(
+  total,
+  items
+){
+
+  if(
+    !Array.isArray(items) ||
+    items.length===0
+  ){
+
+    return [];
+
+  }
+
+
+  const bases =
+    items.map(
+      function(item){
+
+        return (
+          n(item.price) *
+          Math.max(
+            1,
+            n(item.qty)
+          )
+        );
+
+      }
+    );
+
+
+  const baseTotal =
+    bases.reduce(
+      function(sum,value){
+
+        return sum+value;
+
+      },
+      0
+    );
+
+
+  if(baseTotal<=0){
+
+    return items.map(
+      function(){
+
+        return 0;
+
+      }
+    );
+
+  }
+
+
+  const raw =
+    bases.map(
+      function(base){
+
+        return (
+          n(total) *
+          base /
+          baseTotal
+        );
+
+      }
+    );
+
+
+  const result =
+    raw.map(
+      function(value){
+
+        return Math.floor(
+          value
+        );
+
+      }
+    );
+
+
+  let remainder =
+    Math.round(
+      n(total)
+    ) -
+    result.reduce(
+      function(sum,value){
+
+        return sum+value;
+
+      },
+      0
+    );
+
+
+  const fractions =
+    raw
+      .map(
+        function(value,index){
+
+          return {
+
+            index,
+
+            fraction:
+              value-
+              Math.floor(value)
+
+          };
+
+        }
+      )
+      .sort(
+        function(a,b){
+
+          return (
+            b.fraction-
+            a.fraction
+          );
+
+        }
+      );
+
+
+  let i=0;
+
+
+  while(
+    remainder>0 &&
+    fractions.length>0
+  ){
+
+    result[
+      fractions[
+        i%fractions.length
+      ].index
+    ]++;
+
+
+    remainder--;
+
+    i++;
+
+  }
+
+
+  return result;
+
+}
+
+
+function splitAmount(
+  amount,
+  ids
+){
+
+  if(
+    !Array.isArray(ids) ||
+    ids.length===0
+  ){
+
+    return {};
+
+  }
+
+
+  const result={};
+
+
+  const base =
+    Math.floor(
+      n(amount) /
+      ids.length
+    );
+
+
+  let remainder =
+    Math.round(
+      n(amount)
+    ) -
+    base*ids.length;
+
+
+  ids.forEach(
+    function(id,index){
+
+      result[id]=
+        base +
+        (
+          index<remainder
+            ? 1
+            : 0
+        );
+
+    }
+  );
+
+
+  return result;
+
+}
+
+
+function buildResult(){
+
+  const personMap={};
+
+
+  currentTrip.people.forEach(
+    function(person){
+
+      personMap[person.id]={
+
+        id:person.id,
+
+        name:
+          person.name ||
+          "Tanpa Nama",
+
+        total:0,
+
+        paid:0,
+
+        places:{}
+
+      };
+
+    }
+  );
+
+
+  const places=[];
+
+
+  currentTrip.places.forEach(
+    function(place){
+
+      const calc =
+        calculatePlace(
+          place
+        );
+
+
+      const items =
+        place.items.filter(
+          function(item){
+
+            return String(
+              item.name || ""
+            ).trim()!=="";
+
+          }
+        );
+
+
+      const allocated =
+        allocateInteger(
+          calc.total,
+          items
+        );
+
+
+      const resultItems=[];
+
+
+      items.forEach(
+        function(item,index){
+
+          const consumers =
+            Array.isArray(
+              item.consumers
+            )
+              ? item.consumers.filter(
+                  function(id){
+
+                    return !!personMap[id];
+
+                  }
+                )
+              : [];
+
+
+          const shares =
+            splitAmount(
+              allocated[index],
+              consumers
+            );
+
+
+          Object.keys(
+            shares
+          ).forEach(
+            function(personId){
+
+              const amount =
+                shares[personId];
+
+
+              const person =
+                personMap[personId];
+
+
+              if(!person){
+                return;
+              }
+
+
+              person.total +=
+                amount;
+
+
+              if(
+                !person.places[place.id]
+              ){
+
+                person.places[place.id]={
+
+                  name:
+                    place.name ||
+                    "Tempat tanpa nama",
+
+                  items:[],
+
+                  total:0
+
+                };
+
+              }
+
+
+              person
+                .places[place.id]
+                .items
+                .push({
+
+                  name:item.name,
+
+                  qty:item.qty,
+
+                  amount:amount
+
+                });
+
+
+              person
+                .places[place.id]
+                .total +=
+                amount;
+
+            }
+          );
+
+
+          resultItems.push({
+
+            item,
+
+            finalTotal:
+              allocated[index],
+
+            shares
+
+          });
+
+        }
+      );
+
+
+      if(
+        place.payerId &&
+        personMap[place.payerId]
+      ){
+
+        personMap[
+          place.payerId
+        ].paid +=
+          Math.round(
+            calc.total
+          );
+
+      }
+
+
+      places.push({
+
+        place,
+
+        calc,
+
+        items:resultItems
+
+      });
+
+    }
+  );
+
+
+  return {
+
+    people:
+      Object.values(
+        personMap
+      ),
+
+    places,
+
+    total:
+      places.reduce(
+        function(sum,place){
+
+          return (
+            sum +
+            Math.round(
+              place.calc.total
+            )
+          );
+
+        },
+        0
+      )
+
+  };
+
+}
+
+
+/* =====================================================
+   SETTLEMENT
+===================================================== */
+
+function buildTransfers(
+  result
+){
+
+  const debtors =
+    result.people
+      .map(
+        function(person){
+
+          return {
+
+            name:person.name,
+
+            amount:
+              Math.max(
+                0,
+                Math.round(
+                  person.total-
+                  person.paid
+                )
+              )
+
+          };
+
+        }
+      )
+      .filter(
+        function(person){
+
+          return person.amount>0;
+
+        }
+      )
+      .sort(
+        function(a,b){
+
+          return b.amount-a.amount;
+
+        }
+      );
+
+
+  const receivers =
+    result.people
+      .map(
+        function(person){
+
+          return {
+
+            name:person.name,
+
+            amount:
+              Math.max(
+                0,
+                Math.round(
+                  person.paid-
+                  person.total
+                )
+              )
+
+          };
+
+        }
+      )
+      .filter(
+        function(person){
+
+          return person.amount>0;
+
+        }
+      )
+      .sort(
+        function(a,b){
+
+          return b.amount-a.amount;
+
+        }
+      );
+
+
+  const transfers=[];
+
+  let d=0;
+
+  let r=0;
+
+
+  while(
+    d<debtors.length &&
+    r<receivers.length
+  ){
+
+    const debtor =
+      debtors[d];
+
+
+    const receiver =
+      receivers[r];
+
+
+    const amount =
+      Math.min(
+        debtor.amount,
+        receiver.amount
+      );
+
+
+    if(amount>0){
+
+      transfers.push({
+
+        from:debtor.name,
+
+        to:receiver.name,
+
+        amount:amount
+
+      });
+
+    }
+
+
+    debtor.amount -=
+      amount;
+
+
+    receiver.amount -=
+      amount;
+
+
+    if(
+      debtor.amount<=0
+    ){
+
+      d++;
+
+    }
+
+
+    if(
+      receiver.amount<=0
+    ){
+
+      r++;
+
+    }
+
+  }
+
+
+  return transfers;
+
+}
+
+
+/* =====================================================
+   RESULT UI
+===================================================== */
+
+function renderResult(){
+
+  const container =
+    document.getElementById(
+      "resultView"
+    );
+
+
+  if(
+    !container ||
+    !currentTrip
+  ){
+
+    return;
+
+  }
+
+
+  const result =
+    buildResult();
+
+
+  const transfers =
+    buildTransfers(
+      result
+    );
+
+
+  container.innerHTML=`
+
+    <div class="result-hero">
+
+      <span class="badge badge-complete">
+
+        ✓ Split Bill Selesai
+
+      </span>
+
+
+      <h1
+        style="margin:12px 0 4px">
+
+        ${esc(
+          currentTrip.tripName ||
+          "Split Bill"
+        )}
+
+      </h1>
+
+
+      <div class="small">
+
+        📍 ${
+          esc(
+            currentTrip.destination ||
+            "Destinasi belum diisi"
+          )
+        }
+
+      </div>
+
+
+      <div class="result-total">
+
+        ${money(
+          result.total
+        )}
+
+      </div>
+
+
+      <div class="small">
+        Total Bill
+      </div>
+
+    </div>
+
+
+    <div
+      class="btn-row"
+      style="margin-bottom:18px">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        onclick="showStep(1)">
+
+        ✏️ Edit Bill
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="showStep(3)">
+
+        ☑️ Edit Pembagian
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn btn-light"
+        onclick="goHome()">
+
+        🏠 Home
+
+      </button>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="card">
+
+      <h2>
+        📊 Ringkasan
+      </h2>
+
+
+      <div class="summary-grid">
+
+        <div class="summary-box">
+
+          <small>
+            Total Bill
+          </small>
+
+          <strong>
+            ${money(result.total)}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Tempat
+          </small>
+
+          <strong>
+            ${currentTrip.places.length}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Orang
+          </small>
+
+          <strong>
+            ${currentTrip.people.length}
+          </strong>
+
+        </div>
+
+
+        <div class="summary-box">
+
+          <small>
+            Status
+          </small>
+
+          <strong>
+            ✓ Selesai
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PLACE DETAIL -->
+
+    <div class="card">
+
+      <h2>
+        🍜 Detail Per Tempat
+      </h2>
+
+
+      ${
+        result.places
+          .map(
+            function(placeResult){
+
+              return `
+
+                <div class="result-place">
+
+                  <div class="result-place-head">
+
+                    <strong>
+
+                      ${esc(
+                        placeResult.place.name ||
+                        "Tempat tanpa nama"
+                      )}
+
+                    </strong>
+
+
+                    <strong>
+
+                      ${money(
+                        placeResult.calc.total
+                      )}
+
+                    </strong>
+
+                  </div>
+
+
+                  <div class="result-place-body">
+
+
+                    <div class="summary-grid">
+
+                      <div class="summary-box">
+
+                        <small>
+                          Subtotal
+                        </small>
+
+                        <strong>
+                          ${money(
+                            placeResult.calc.subtotal
+                          )}
+                        </strong>
+
+                      </div>
+
+
+                      <div class="summary-box">
+
+                        <small>
+                          Discount
+                        </small>
+
+                        <strong>
+                          -${money(
+                            placeResult.calc.discount
+                          )}
+                        </strong>
+
+                      </div>
+
+
+                      <div class="summary-box">
+
+                        <small>
+                          Service
+                        </small>
+
+                        <strong>
+                          ${money(
+                            placeResult.calc.service
+                          )}
+                        </strong>
+
+                      </div>
+
+
+                      <div class="summary-box">
+
+                        <small>
+                          Tax / PPN
+                        </small>
+
+                        <strong>
+                          ${money(
+                            placeResult.calc.tax
+                          )}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+
+                    <div
+                      style="margin-top:15px">
+
+                      ${
+                        placeResult.items
+                          .map(
+                            function(entry){
+
+                              return `
+
+                                <div class="result-item">
+
+                                  <div
+                                    class="result-item-top">
+
+                                    <div>
+
+                                      <strong>
+
+                                        ${esc(
+                                          entry.item.name
+                                        )}
+
+                                      </strong>
+
+
+                                      <div class="small">
+
+                                        ${entry.item.qty}
+                                        ×
+                                        ${money(
+                                          entry.item.price
+                                        )}
+
+                                      </div>
+
+                                    </div>
+
+
+                                    <strong>
+
+                                      ${money(
+                                        entry.finalTotal
+                                      )}
+
+                                    </strong>
+
+                                  </div>
+
+
+                                  <div class="consumer">
+
+                                    ${
+                                      Object.entries(
+                                        entry.shares
+                                      )
+                                      .map(
+                                        function(pair){
+
+                                          const person =
+                                            currentTrip.people.find(
+                                              function(item){
+
+                                                return (
+                                                  item.id===
+                                                  pair[0]
+                                                );
+
+                                              }
+                                            );
+
+
+                                          return `
+
+                                            👤 ${
+                                              esc(
+                                                person?.name ||
+                                                "Tanpa Nama"
+                                              )
+                                            }:
+
+                                            ${money(
+                                              pair[1]
+                                            )}
+
+                                          `;
+
+                                        }
+                                      )
+                                      .join("<br>")
+                                    }
+
+                                  </div>
+
+                                </div>
+
+                              `;
+
+                            }
+                          )
+                          .join("")
+                      }
+
+                    </div>
+
+
+                    <div class="breakdown-row">
+
+                      <span>
+                        Biaya Lainnya
+                      </span>
+
+                      <strong>
+                        ${money(
+                          placeResult.calc.other
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div
+                      class="breakdown-row total">
+
+                      <span>
+                        Total Tempat
+                      </span>
+
+                      <strong>
+                        ${money(
+                          placeResult.calc.total
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    <div
+                      class="breakdown-row total">
+
+                      <span>
+                        Payer
+                      </span>
+
+                      <span>
+
+                        ${esc(
+                          currentTrip.people.find(
+                            function(person){
+
+                              return (
+                                person.id===
+                                placeResult.place.payerId
+                              );
+
+                            }
+                          )?.name ||
+                          "-"
+                        )}
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("")
+      }
+
+    </div>
+
+
+    <!-- PERSON -->
+
+    <div class="card">
+
+      <h2>
+        👥 Detail Per Orang
+      </h2>
+
+
+      ${
+        result.people
+          .map(
+            function(person){
+
+              const balance =
+                Math.round(
+                  person.paid-
+                  person.total
+                );
+
+
+              let balanceHTML="";
+
+
+              if(balance>0){
+
+                balanceHTML=`
+
+                  <div
+                    class="balance balance-receive">
+
+                    Menerima
+                    ${money(balance)}
+
+                  </div>
+
+                `;
+
+              }else if(balance<0){
+
+                balanceHTML=`
+
+                  <div
+                    class="balance balance-owe">
+
+                    Kurang
+                    ${money(
+                      Math.abs(
+                        balance
+                      )
+                    )}
+
+                  </div>
+
+                `;
+
+              }else{
+
+                balanceHTML=`
+
+                  <div
+                    class="balance balance-zero">
+
+                    Pas ✓
+
+                  </div>
+
+                `;
+
+              }
+
+
+              return `
+
+                <div class="person-result">
+
+                  <div
+                    class="person-result-head">
+
+                    <div>
+
+                      <h3
+                        style="
+                          margin:0 0 3px">
+
+                        👤 ${
+                          esc(
+                            person.name
+                          )
+                        }
+
+                      </h3>
+
+
+                      <div class="small">
+
+                        Total konsumsi:
+                        ${money(
+                          person.total
+                        )}
+
+                      </div>
+
+                    </div>
+
+
+                    ${balanceHTML}
+
+                  </div>
+
+
+                  <div
+                    style="margin-top:15px">
+
+                    ${
+                      Object.values(
+                        person.places
+                      )
+                      .map(
+                        function(place){
+
+                          return `
+
+                            <div
+                              style="
+                                margin-bottom:13px">
+
+                              <strong>
+
+                                🍜 ${
+                                  esc(
+                                    place.name
+                                  )
+                                }
+
+                              </strong>
+
+
+                              ${
+                                place.items
+                                  .map(
+                                    function(item){
+
+                                      return `
+
+                                        <div
+                                          class="breakdown-row">
+
+                                          <span>
+
+                                            ${esc(
+                                              item.name
+                                            )}
+
+                                            <span class="small">
+
+                                              ×
+                                              ${item.qty}
+
+                                            </span>
+
+                                          </span>
+
+
+                                          <strong>
+
+                                            ${money(
+                                              item.amount
+                                            )}
+
+                                          </strong>
+
+                                        </div>
+
+                                      `;
+
+                                    }
+                                  )
+                                  .join("")
+                              }
+
+
+                              <div
+                                class="breakdown-row total">
+
+                                <span>
+                                  Subtotal
+                                </span>
+
+                                <span>
+
+                                  ${money(
+                                    place.total
+                                  )}
+
+                                </span>
+
+                              </div>
+
+                            </div>
+
+                          `;
+
+                        }
+                      )
+                      .join("")
+                    }
+
+                  </div>
+
+
+                  <div
+                    class="breakdown-row total">
+
+                    <span>
+                      Total konsumsi
+                    </span>
+
+                    <strong>
+
+                      ${money(
+                        person.total
+                      )}
+
+                    </strong>
+
+                  </div>
+
+
+                  <div
+                    class="breakdown-row">
+
+                    <span>
+                      Sudah dibayar
+                    </span>
+
+                    <strong>
+
+                      ${money(
+                        person.paid
+                      )}
+
+                    </strong>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("")
+      }
+
+    </div>
+
+
+    <!-- SETTLEMENT -->
+
+    <div class="card">
+
+      <h2>
+        💸 Settlement
+      </h2>
+
+
+      ${
+        transfers.length===0
+
+          ? `
+
+            <div class="alert alert-success">
+
+              ✓ Tidak ada transfer yang diperlukan.
+
+            </div>
+
+          `
+
+          :
+
+          transfers
+            .map(
+              function(transfer){
+
+                return `
+
+                  <div class="transfer">
+
+                    <div>
+
+                      <strong>
+
+                        ${esc(
+                          transfer.from
+                        )}
+
+                      </strong>
+
+
+                      <div class="small">
+
+                        transfer ke
+                        ${esc(
+                          transfer.to
+                        )}
+
+                      </div>
+
+                    </div>
+
+
+                    <div
+                      class="transfer-amount">
+
+                      ${money(
+                        transfer.amount
+                      )}
+
+                    </div>
+
+                  </div>
+
+                `;
+
+              }
+            )
+            .join("")
+      }
+
+    </div>
+
+
+    <!-- RECONCILIATION -->
+
+    <div class="card">
+
+      <h2>
+        🧾 Rekonsiliasi
+      </h2>
+
+
+      <div class="breakdown-row">
+
+        <span>
+          Total Bill
+        </span>
+
+        <strong>
+          ${money(result.total)}
+        </strong>
+
+      </div>
+
+
+      <div class="breakdown-row">
+
+        <span>
+          Total Konsumsi
+        </span>
+
+        <strong>
+
+          ${money(
+            result.people.reduce(
+              function(sum,person){
+
+                return (
+                  sum+
+                  person.total
+                );
+
+              },
+              0
+            )
+          )}
+
+        </strong>
+
+      </div>
+
+
+      <div class="breakdown-row">
+
+        <span>
+          Total Dibayar
+        </span>
+
+        <strong>
+
+          ${money(
+            result.people.reduce(
+              function(sum,person){
+
+                return (
+                  sum+
+                  person.paid
+                );
+
+              },
+              0
+            )
+          )}
+
+        </strong>
+
+      </div>
+
+
+      <div
+        class="alert alert-success"
+        style="margin-top:13px">
+
+        ✓ Perhitungan selesai.
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   SHOW RESULT
+===================================================== */
+
+function showResult(){
+
+  document
+    .querySelectorAll(".step")
+    .forEach(
+      function(element){
+
+        element.classList.add(
+          "hidden"
+        );
+
+      }
+    );
+
+
+  const home =
+    document.getElementById(
+      "homeView"
+    );
+
+
+  if(home){
+    home.classList.add(
+      "hidden"
+    );
+  }
+
+
+  const result =
+    document.getElementById(
+      "resultView"
+    );
+
+
+  if(result){
+
+    result.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  const progress =
+    document.getElementById(
+      "progress"
+    );
+
+
+  if(progress){
+
+    progress.style.display="none";
+
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   VIEW RESULT FROM HOME
+===================================================== */
+
+function viewResult(id){
+
+  const found =
+    trips.find(
+      function(trip){
+
+        return trip.id===id;
+
+      }
+    );
+
+
+  if(!found){
+
+    alert(
+      "Bill tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  currentTrip =
+    normalizeTrip(
+      deepClone(found)
+    );
+
+
+  isDirty=false;
+
+
+  renderResult();
+
+  showResult();
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteTrip(id){
+
+  const found =
+    trips.find(
+      function(trip){
+
+        return trip.id===id;
+
+      }
+    );
+
+
+  if(!found){
+    return;
+  }
+
+
+  const yes =
+    confirm(
+      'Hapus "' +
+      (
+        found.tripName ||
+        "Split Bill"
+      ) +
+      '"?\n\nData tidak bisa dikembalikan.'
+    );
+
+
+  if(!yes){
+    return;
+  }
+
+
+  trips =
+    trips.filter(
+      function(trip){
+
+        return trip.id!==id;
+
+      }
+    );
+
+
+  saveTrips();
+
+  renderHome();
+
+  toast(
+    "Bill berhasil dihapus."
+  );
+
+}
+
+
+/* =====================================================
+   INPUT TRACKING
+===================================================== */
+
+document.addEventListener(
+  "input",
+  function(event){
+
+    if(
+      currentTrip &&
+      event.target.matches(
+        "input, select"
+      )
+    ){
+
+      isDirty=true;
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+(function init(){
+
+  try{
+
+    loadTrips();
+
+    renderHome();
+
+  }catch(error){
+
+    console.error(
+      "Initialization error:",
+      error
+    );
+
+
+    trips=[];
+
+    currentTrip=null;
+
+    isDirty=false;
+
+
+    const home =
+      document.getElementById(
+        "homeView"
+      );
+
+
+    if(home){
+
+      home.innerHTML=`
+
+        <div class="card">
+
+          <div class="alert alert-danger">
+
+            Aplikasi berhasil dibuka,
+            tetapi terjadi error saat membaca data.
+
+          </div>
+
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="location.reload()">
+
+            🔄 Coba Lagi
+
+          </button>
+
+        </div>
+
+      `;
+
+    }
+
+  }
+
+})();
+
+</script>
+
+</body>
+</html>
