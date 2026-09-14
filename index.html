@@ -2,4539 +2,2628 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Split Bill ✨</title>
 
 <style>
-
-/* ============================================================
-   COLOR PALETTE
-============================================================ */
-
 :root{
-    --bg:#f8f5ff;
-    --card:#ffffff;
+  --bg:#f8f5ff;
+  --card:#ffffff;
+  --text:#39334f;
+  --muted:#8d879f;
+  --border:#ebe6f4;
 
-    --purple:#7567d9;
-    --purple-dark:#594bb7;
-    --purple-light:#eeeaff;
+  --purple:#7567d9;
+  --purple-dark:#594bb7;
+  --purple-soft:#eeeaff;
 
-    --pink:#f28bb2;
-    --pink-light:#fff0f6;
+  --pink:#f28bb2;
+  --pink-soft:#fff0f6;
 
-    --peach:#ffb47b;
-    --peach-light:#fff4ea;
+  --peach:#ffb47b;
+  --peach-soft:#fff4ea;
 
-    --mint:#78cbb0;
-    --mint-light:#ebfaf5;
+  --mint:#78cbb0;
+  --mint-soft:#ebfaf5;
 
-    --blue:#6fa8dc;
-    --blue-light:#edf6ff;
+  --blue:#6fa8dc;
+  --blue-soft:#edf6ff;
 
-    --yellow:#f5c96a;
-    --yellow-light:#fff8df;
+  --yellow:#f5c96a;
+  --yellow-soft:#fff8df;
 
-    --text:#343047;
-    --muted:#8c879d;
+  --danger:#e87878;
+  --danger-soft:#fff0f0;
 
-    --border:#ebe7f3;
-
-    --danger:#e86b7d;
-    --danger-light:#fff0f2;
-
-    --shadow:
-        0 8px 25px rgba(86,67,140,.08);
-
-    --shadow-hover:
-        0 12px 30px rgba(86,67,140,.13);
+  --shadow:0 12px 35px rgba(89,75,183,.10);
 }
 
-
-/* ============================================================
-   GLOBAL
-============================================================ */
-
 *{
-    box-sizing:border-box;
+  box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    background:
-        radial-gradient(
-            circle at top left,
-            #eeeaff 0,
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at top right,
-            #fff0f6 0,
-            transparent 30%
-        ),
-        var(--bg);
-
-    color:var(--text);
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:linear-gradient(135deg,#f8f5ff 0%,#fff8fb 50%,#f5fbfa 100%);
+  color:var(--text);
+  min-height:100vh;
 }
 
-
-.app{
-    max-width:680px;
-    margin:0 auto;
-    min-height:100vh;
+button,input{
+  font:inherit;
 }
 
-
-/* ============================================================
-   HEADER
-============================================================ */
+button{
+  cursor:pointer;
+}
 
 .header{
-    color:white;
-
-    padding:25px 20px 21px;
-
-    position:sticky;
-    top:0;
-
-    z-index:20;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7668d8,
-            #9a82e8 50%,
-            #e08ab6
-        );
-
-    border-radius:
-        0 0 28px 28px;
-
-    box-shadow:
-        0 8px 25px rgba(102,78,170,.18);
+  background:linear-gradient(135deg,#8d80ed,#7567d9 50%,#e28ab2);
+  color:white;
+  padding:18px 20px 24px;
+  border-radius:0 0 28px 28px;
+  box-shadow:0 8px 30px rgba(117,103,217,.20);
+  position:sticky;
+  top:0;
+  z-index:50;
 }
 
-.header h1{
-    margin:0;
-
-    font-size:26px;
-
-    letter-spacing:-.5px;
+.header-inner{
+  max-width:1050px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.header p{
-    margin:6px 0 0;
-
-    color:rgba(255,255,255,.82);
-
-    font-size:13px;
+.brand{
+  font-size:22px;
+  font-weight:800;
 }
 
-
-.steps{
-    display:flex;
-
-    gap:6px;
-
-    margin-top:19px;
+.brand small{
+  display:block;
+  font-size:11px;
+  opacity:.8;
+  font-weight:500;
+  margin-top:2px;
 }
 
-.step{
-    flex:1;
-
-    height:6px;
-
-    background:
-        rgba(255,255,255,.25);
-
-    border-radius:20px;
-
-    transition:.3s;
+.home-btn{
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.16);
+  color:white;
+  padding:9px 14px;
+  border-radius:12px;
+  font-weight:700;
 }
 
-.step.active{
-    background:white;
-
-    box-shadow:
-        0 0 8px rgba(255,255,255,.5);
+.progress{
+  max-width:1050px;
+  margin:16px auto 0;
+  display:flex;
+  gap:6px;
 }
 
+.progress-item{
+  flex:1;
+  height:5px;
+  border-radius:99px;
+  background:rgba(255,255,255,.28);
+}
 
-/* ============================================================
-   CONTAINER
-============================================================ */
+.progress-item.active{
+  background:white;
+}
 
 .container{
-    padding:17px 15px 35px;
+  max-width:1050px;
+  margin:auto;
+  padding:28px 18px 60px;
 }
 
+.hidden{
+  display:none!important;
+}
 
-/* ============================================================
-   CARD
-============================================================ */
+h1,h2,h3{
+  margin-top:0;
+}
+
+.page-title{
+  font-size:30px;
+  margin-bottom:7px;
+}
+
+.page-subtitle{
+  color:var(--muted);
+  margin-top:0;
+  margin-bottom:25px;
+}
 
 .card{
-    background:
-        rgba(255,255,255,.92);
-
-    border-radius:21px;
-
-    padding:18px;
-
-    margin-bottom:15px;
-
-    border:1px solid rgba(255,255,255,.8);
-
-    box-shadow:var(--shadow);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
 }
 
-.card h2{
-    margin:0 0 6px;
-
-    font-size:18px;
-
-    color:var(--text);
-
-    letter-spacing:-.2px;
+.grid{
+  display:grid;
+  gap:16px;
 }
 
-
-/* ============================================================
-   DESCRIPTION
-============================================================ */
-
-.desc{
-    color:var(--muted);
-
-    font-size:13px;
-
-    line-height:1.55;
-
-    margin-bottom:17px;
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
-
-/* ============================================================
-   FIELD
-============================================================ */
-
-.field{
-    margin-bottom:13px;
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
 }
 
 label{
-    display:block;
-
-    font-size:12px;
-
-    font-weight:700;
-
-    margin-bottom:6px;
-
-    color:#625c78;
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
 }
 
-input,
-select{
-
-    width:100%;
-
-    padding:12px 13px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius:12px;
-
-    background:#fff;
-
-    color:var(--text);
-
-    font-size:14px;
-
-    outline:none;
-
-    transition:.2s;
+input{
+  width:100%;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+  padding:12px 14px;
+  border-radius:13px;
+  outline:none;
 }
 
-input::placeholder{
-    color:#b4afc1;
+input:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 4px var(--purple-soft);
 }
-
-input:focus,
-select:focus{
-
-    border-color:
-        var(--purple);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(117,103,217,.10);
-}
-
-
-/* ============================================================
-   BUTTON
-============================================================ */
 
 .btn{
-
-    width:100%;
-
-    border:0;
-
-    border-radius:14px;
-
-    padding:13px;
-
-    font-size:14px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-    letter-spacing:.1px;
+  border:0;
+  border-radius:13px;
+  padding:11px 16px;
+  font-weight:750;
+  transition:.15s;
 }
 
 .btn:hover{
-    transform:translateY(-1px);
+  transform:translateY(-1px);
 }
 
-.btn:active{
-    transform:scale(.98);
+.btn-primary{
+  color:white;
+  background:linear-gradient(135deg,var(--purple),var(--purple-dark));
 }
 
-
-/* MAIN BUTTON */
-
-.primary{
-
-    color:white;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--purple),
-            #9079e5
-        );
-
-    box-shadow:
-        0 7px 17px
-        rgba(117,103,217,.23);
+.btn-secondary{
+  background:var(--purple-soft);
+  color:var(--purple-dark);
 }
 
-
-/* SECONDARY */
-
-.secondary{
-
-    background:
-        var(--purple-light);
-
-    color:
-        var(--purple-dark);
+.btn-pink{
+  background:var(--pink-soft);
+  color:#c24f7d;
 }
 
-
-/* ADD */
-
-.add{
-
-    background:
-        linear-gradient(
-            135deg,
-            #faf8ff,
-            #f4efff
-        );
-
-    border:
-        1px dashed #c7bdf1;
-
-    color:
-        var(--purple-dark);
+.btn-mint{
+  background:var(--mint-soft);
+  color:#348b70;
 }
 
-
-/* GREEN */
-
-.green{
-
-    background:
-        linear-gradient(
-            135deg,
-            #5fbd9d,
-            #82ceb5
-        );
-
-    color:white;
-
-    box-shadow:
-        0 7px 17px
-        rgba(95,189,157,.20);
+.btn-peach{
+  background:var(--peach-soft);
+  color:#c6783b;
 }
 
-
-/* BLUE */
-
-.blue{
-
-    background:
-        linear-gradient(
-            135deg,
-            #679ed7,
-            #7fb8e8
-        );
-
-    color:white;
+.btn-danger{
+  background:var(--danger-soft);
+  color:#c75a5a;
 }
 
-
-/* RED */
-
-.red{
-
-    background:
-        var(--danger-light);
-
-    color:
-        #d65367;
+.btn-light{
+  background:#f5f3f8;
+  color:#655f75;
 }
 
-
-/* SMALL BUTTON */
-
-.small-btn{
-
-    border:0;
-
-    border-radius:9px;
-
-    padding:8px 10px;
-
-    font-size:11px;
-
-    font-weight:700;
-
-    cursor:pointer;
+.btn-row{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
 }
 
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:16px;
+}
 
-/* ============================================================
-   PLACE CARD
-============================================================ */
+.section-head h2,
+.section-head h3{
+  margin:0;
+}
 
 .place-card{
-
-    border:
-        1px solid #e8e2f4;
-
-    border-radius:18px;
-
-    padding:14px;
-
-    margin-bottom:14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #fcfbff,
-            #f8f4ff
-        );
-
-    box-shadow:
-        0 4px 14px
-        rgba(92,73,146,.05);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+  margin-bottom:18px;
 }
 
 .place-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:12px;
+  padding:17px 18px;
+  background:linear-gradient(135deg,var(--purple-soft),#fff);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
 .place-title{
-
-    font-size:16px;
-
-    font-weight:800;
-
-    color:
-        var(--purple-dark);
+  font-weight:800;
+  font-size:17px;
 }
 
-.place-subtitle{
-
-    color:var(--muted);
-
-    font-size:11px;
-
-    margin-top:3px;
+.place-body{
+  padding:18px;
 }
 
-
-/* ============================================================
-   MENU ITEM
-============================================================ */
-
-.menu-item{
-
-    background:#fff;
-
-    border:
-        1px solid #eee9f5;
-
-    border-radius:14px;
-
-    padding:12px;
-
-    margin-bottom:9px;
-
-    box-shadow:
-        0 3px 10px
-        rgba(80,60,130,.04);
+.item-card{
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:12px;
+  background:#fff;
 }
 
-.menu-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:10px;
+.item-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.menu-number{
-
-    font-size:11px;
-
-    font-weight:800;
-
-    color:
-        var(--pink);
+.item-name{
+  font-weight:800;
 }
 
-.menu-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 70px 90px;
-
-    gap:8px;
+.item-price{
+  font-weight:800;
+  color:var(--purple-dark);
 }
 
-.menu-total{
-
-    background:
-        #f8f6fb !important;
-
-    color:
-        var(--purple-dark);
+.item-meta{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
 }
 
-
-/* ============================================================
-   SUMMARY
-============================================================ */
-
-.summary{
-
-    background:
-        linear-gradient(
-            135deg,
-            #7162d1,
-            #9078df
-        );
-
-    color:white;
-
-    border-radius:16px;
-
-    padding:14px;
-
-    margin-top:12px;
-
-    box-shadow:
-        0 8px 18px
-        rgba(103,85,180,.16);
+.people-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
 }
 
-.summary-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:10px;
-
-    margin:7px 0;
-
-    font-size:12px;
+.person-card{
+  border:1px solid var(--border);
+  padding:14px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff,#fbfaff);
 }
 
-.summary-row.total{
-
-    border-top:
-        1px solid
-        rgba(255,255,255,.25);
-
-    margin-top:12px;
-
-    padding-top:12px;
-
-    font-size:17px;
-
-    font-weight:800;
+.person-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-
-/* ============================================================
-   PEOPLE
-============================================================ */
-
-.people-row{
-
-    display:flex;
-
-    gap:8px;
-
-    margin-bottom:9px;
-}
-
-.people-row input{
-    flex:1;
-}
-
-.delete-person{
-
-    width:42px;
-
-    border:0;
-
-    border-radius:11px;
-
-    background:
-        var(--danger-light);
-
-    color:
-        var(--danger);
-
-    font-size:18px;
-
-    cursor:pointer;
-}
-
-
-/* ============================================================
-   ASSIGNMENT
-============================================================ */
-
-.assignment-place{
-
-    background:
-        linear-gradient(
-            145deg,
-            #faf8ff,
-            #f6f1ff
-        );
-
-    border:
-        1px solid #e6def7;
-
-    border-radius:18px;
-
-    padding:14px;
-
-    margin-bottom:15px;
-}
-
-.assignment-title{
-
-    font-size:16px;
-
-    font-weight:800;
-
-    color:
-        var(--purple-dark);
-
-    margin-bottom:4px;
-}
-
-.assignment-total{
-
-    color:var(--muted);
-
-    font-size:12px;
-
-    margin-bottom:15px;
-}
-
-.assignment-person{
-
-    background:white;
-
-    border:
-        1px solid #ece8f4;
-
-    border-radius:14px;
-
-    padding:12px;
-
-    margin-bottom:10px;
+.avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--purple-soft),var(--pink-soft));
+  font-size:18px;
 }
 
 .person-name{
-
-    font-weight:800;
-
-    color:#514b67;
-
-    margin-bottom:10px;
+  font-weight:750;
+  flex:1;
 }
 
-.check-item{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    padding:9px 0;
-
-    border-top:
-        1px solid #f0edf5;
-
-    cursor:pointer;
+.assignment-place{
+  margin-bottom:22px;
 }
 
-.check-item:first-of-type{
-    border-top:0;
+.assignment-item{
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:16px;
+  margin-bottom:12px;
+  background:#fff;
 }
 
-.check-item input{
-
-    width:19px;
-
-    height:19px;
-
-    flex:none;
-
-    accent-color:
-        var(--purple);
+.assignment-title{
+  font-weight:800;
+  margin-bottom:12px;
 }
 
-.check-info{
-    flex:1;
+.checkbox-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;
 }
 
-.check-name{
-
-    font-size:13px;
-
-    font-weight:700;
+.checkbox-label{
+  border:1px solid var(--border);
+  padding:10px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-weight:600;
+  background:#faf9fd;
 }
 
-.check-price{
-
-    color:var(--muted);
-
-    font-size:11px;
-
-    margin-top:2px;
+.checkbox-label:has(input:checked){
+  background:var(--mint-soft);
+  border-color:var(--mint);
 }
 
-
-/* ============================================================
-   PAYER
-============================================================ */
-
-.payer-card{
-
-    background:
-        linear-gradient(
-            145deg,
-            #fffafa,
-            #fff5f8
-        );
-
-    border:
-        1px solid #f4e2e8;
-
-    border-radius:16px;
-
-    padding:14px;
-
-    margin-bottom:12px;
+.checkbox-label input{
+  width:auto;
+  accent-color:var(--purple);
 }
 
-.payer-title{
-
-    font-weight:800;
-
-    font-size:15px;
-
-    color:#b75878;
-
-    margin-bottom:5px;
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 9px;
+  border-radius:99px;
+  font-size:11px;
+  font-weight:800;
 }
 
-.payer-total{
-
-    color:var(--muted);
-
-    font-size:12px;
-
-    margin-bottom:12px;
+.badge-draft{
+  background:var(--yellow-soft);
+  color:#a17b16;
 }
 
-
-/* ============================================================
-   RESULT PERSON
-============================================================ */
-
-.result-person{
-
-    border:
-        1px solid #e9e4f1;
-
-    border-radius:17px;
-
-    overflow:hidden;
-
-    margin-bottom:13px;
-
-    background:white;
-
-    box-shadow:
-        0 4px 13px
-        rgba(80,60,130,.05);
+.badge-incomplete{
+  background:var(--peach-soft);
+  color:#b96e32;
 }
 
-.result-head{
-
-    background:
-        linear-gradient(
-            135deg,
-            #7667d7,
-            #9881e5
-        );
-
-    color:white;
-
-    padding:14px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
+.badge-complete{
+  background:var(--mint-soft);
+  color:#348b70;
 }
 
-.result-name{
-    font-weight:800;
+.badge-purple{
+  background:var(--purple-soft);
+  color:var(--purple-dark);
 }
 
-.result-body{
-    padding:12px;
+.home-hero{
+  background:linear-gradient(135deg,#ffffff,#f1edff 55%,#fff0f6);
+  border-radius:27px;
+  padding:30px;
+  margin-bottom:25px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
 }
 
-.result-row{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    padding:9px 0;
-
-    border-bottom:
-        1px solid #f0edf4;
-
-    font-size:13px;
+.home-hero h1{
+  font-size:34px;
+  margin-bottom:8px;
 }
 
-.result-row:last-child{
-    border-bottom:0;
+.trip-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:17px;
 }
 
-
-/* ============================================================
-   BALANCE
-============================================================ */
-
-.balance-box{
-
-    padding:13px;
-
-    border-radius:12px;
-
-    margin-bottom:10px;
-
-    font-size:13px;
+.trip-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
-.balance-positive{
-
-    background:
-        var(--mint-light);
-
-    color:
-        #2f896d;
+.trip-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:6px;
+  background:linear-gradient(90deg,var(--purple),var(--pink),var(--peach));
 }
 
-.balance-negative{
-
-    background:
-        var(--danger-light);
-
-    color:
-        #c44e61;
+.trip-card h3{
+  margin:7px 0 5px;
 }
 
-
-/* ============================================================
-   TRANSFER
-============================================================ */
-
-.transfer-card{
-
-    background:
-        linear-gradient(
-            135deg,
-            #fffdf5,
-            #fff8e8
-        );
-
-    border:
-        1px solid #f4e6bf;
-
-    border-radius:16px;
-
-    padding:15px;
-
-    margin-bottom:10px;
-
-    box-shadow:
-        0 4px 12px
-        rgba(170,130,50,.06);
+.trip-destination{
+  color:var(--muted);
+  font-size:13px;
 }
 
-.transfer-line{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:10px;
+.trip-total{
+  font-size:24px;
+  font-weight:850;
+  color:var(--purple-dark);
+  margin:18px 0 10px;
 }
 
-.transfer-person{
-
-    font-weight:800;
-
-    color:#625538;
+.trip-info{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
 }
 
-.transfer-arrow{
+.empty{
+  text-align:center;
+  padding:55px 20px;
+  background:white;
+  border:1px dashed var(--border);
+  border-radius:22px;
+}
 
-    color:
-        var(--peach);
+.empty-icon{
+  font-size:50px;
+  margin-bottom:10px;
+}
 
-    font-size:18px;
+.alert{
+  padding:13px 15px;
+  border-radius:14px;
+  margin-bottom:16px;
+  font-size:13px;
+}
+
+.alert-warning{
+  background:var(--yellow-soft);
+  color:#846a18;
+}
+
+.alert-success{
+  background:var(--mint-soft);
+  color:#2f8067;
+}
+
+.alert-danger{
+  background:var(--danger-soft);
+  color:#a74c4c;
+}
+
+.place-total{
+  margin-top:16px;
+  padding:14px;
+  background:var(--purple-soft);
+  border-radius:15px;
+  display:flex;
+  justify-content:space-between;
+  font-weight:800;
+}
+
+.bottom-actions{
+  position:sticky;
+  bottom:15px;
+  z-index:30;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);
+  padding:12px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-radius:18px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:22px;
+}
+
+.result-hero{
+  background:linear-gradient(135deg,#eeeaff,#fff0f6,#fff4ea);
+  padding:27px;
+  border-radius:23px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.result-total{
+  font-size:38px;
+  font-weight:900;
+  color:var(--purple-dark);
+}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.summary-box{
+  border-radius:17px;
+  padding:16px;
+  background:#faf9fd;
+  border:1px solid var(--border);
+}
+
+.summary-box small{
+  color:var(--muted);
+  display:block;
+  margin-bottom:6px;
+}
+
+.summary-box strong{
+  font-size:18px;
+}
+
+.result-place{
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:18px;
+}
+
+.result-place-header{
+  background:linear-gradient(135deg,var(--purple-soft),#fff);
+  padding:17px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+
+.result-place-body{
+  padding:17px;
+}
+
+.result-item{
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.result-item:last-child{
+  border-bottom:0;
+}
+
+.result-item-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.consumer-list{
+  margin-top:8px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.person-result{
+  border:1px solid var(--border);
+  border-radius:19px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.person-result-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.balance{
+  padding:10px 13px;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.balance-owe{
+  background:var(--danger-soft);
+  color:#c75a5a;
+}
+
+.balance-receive{
+  background:var(--mint-soft);
+  color:#348b70;
+}
+
+.balance-zero{
+  background:#f4f3f7;
+  color:#777184;
+}
+
+.breakdown-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:7px 0;
+  font-size:13px;
+}
+
+.breakdown-row.total{
+  border-top:1px solid var(--border);
+  margin-top:6px;
+  padding-top:11px;
+  font-weight:850;
+  font-size:15px;
+}
+
+.transfer{
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff,#f4f0ff);
+  border:1px solid var(--border);
+  padding:15px;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
 
 .transfer-amount{
-
-    font-size:16px;
-
-    font-weight:800;
-
-    color:#9b6b1d;
+  font-weight:850;
+  color:var(--purple-dark);
 }
 
-
-/* ============================================================
-   TOTAL BOX
-============================================================ */
-
-.total-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            #7566d5,
-            #927ce2 55%,
-            #c77db0
-        );
-
-    color:white;
-
-    border-radius:21px;
-
-    padding:20px;
-
-    margin-bottom:15px;
-
-    box-shadow:
-        0 10px 25px
-        rgba(104,82,177,.20);
-
-    position:relative;
-
-    overflow:hidden;
+.small{
+  font-size:12px;
+  color:var(--muted);
 }
 
-.total-box::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:130px;
-
-    height:130px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,255,255,.08);
-
-    right:-40px;
-
-    top:-45px;
+.divider{
+  height:1px;
+  background:var(--border);
+  margin:18px 0;
 }
 
-.total-big{
-
-    font-size:28px;
-
-    font-weight:900;
-
-    margin-top:5px;
-
-    letter-spacing:-.5px;
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(43,37,65,.38);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:18px;
 }
 
-
-/* ============================================================
-   SUCCESS
-============================================================ */
-
-.success{
-
-    background:
-        var(--mint-light);
-
-    color:
-        #287c62;
-
-    padding:13px;
-
-    border-radius:13px;
-
-    font-size:13px;
-
-    margin-bottom:13px;
-
-    border:
-        1px solid #d4f1e7;
+.modal{
+  width:min(500px,100%);
+  background:white;
+  border-radius:23px;
+  padding:22px;
+  box-shadow:0 25px 80px rgba(0,0,0,.2);
 }
 
-.warning{
-
-    background:
-        var(--yellow-light);
-
-    color:
-        #9a6b12;
-
-    padding:13px;
-
-    border-radius:13px;
-
-    font-size:13px;
-
-    margin-bottom:13px;
+.modal.open{
+  display:flex;
 }
 
+@media(max-width:700px){
+  .grid-2,
+  .grid-3,
+  .trip-grid{
+    grid-template-columns:1fr;
+  }
 
-/* ============================================================
-   EMPTY
-============================================================ */
+  .summary-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-.empty{
+  .home-hero h1{
+    font-size:27px;
+  }
 
-    text-align:center;
+  .page-title{
+    font-size:25px;
+  }
 
-    color:#a09bad;
-
+  .card{
     padding:17px;
+    border-radius:19px;
+  }
 
-    font-size:13px;
+  .bottom-actions{
+    flex-direction:column;
+  }
 
-    background:
-        #faf9fd;
+  .bottom-actions .btn{
+    width:100%;
+  }
 
-    border-radius:12px;
+  .header{
+    padding:15px 15px 20px;
+  }
+
+  .container{
+    padding:22px 13px 45px;
+  }
+
+  .place-header{
+    align-items:flex-start;
+    flex-direction:column;
+  }
 }
 
+@media(max-width:430px){
+  .summary-grid{
+    grid-template-columns:1fr;
+  }
 
-/* ============================================================
-   SHARE BOX
-============================================================ */
+  .btn{
+    width:100%;
+  }
 
-.share-box{
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef6ff,
-            #f1edff
-        );
-
-    border:
-        1px solid #dfe7f8;
-
-    border-radius:17px;
-
-    padding:15px;
-
-    margin-bottom:15px;
+  .btn-row .btn{
+    flex:1;
+  }
 }
-
-.share-box h3{
-
-    margin:0 0 7px;
-
-    font-size:15px;
-
-    color:
-        #5d65a5;
-}
-
-.share-box p{
-
-    margin:0 0 12px;
-
-    font-size:12px;
-
-    color:#686b7d;
-
-    line-height:1.5;
-}
-
-.link-preview{
-
-    background:white;
-
-    border:
-        1px solid #e1e4ef;
-
-    padding:10px;
-
-    border-radius:9px;
-
-    font-size:11px;
-
-    word-break:break-all;
-
-    color:#777;
-
-    margin-bottom:10px;
-}
-
-
-/* ============================================================
-   HIDDEN
-============================================================ */
-
-.hidden{
-    display:none !important;
-}
-
-
-/* ============================================================
-   MOBILE
-============================================================ */
-
-@media(max-width:480px){
-
-    .header{
-
-        padding:
-            21px 16px 18px;
-
-        border-radius:
-            0 0 23px 23px;
-    }
-
-    .header h1{
-        font-size:23px;
-    }
-
-    .container{
-        padding:
-            13px 11px 30px;
-    }
-
-    .card{
-        padding:15px;
-
-        border-radius:17px;
-    }
-
-    .menu-grid{
-
-        grid-template-columns:
-            1fr 62px 82px;
-    }
-
-    input,
-    select{
-        padding:11px;
-    }
-
-    .transfer-line{
-        flex-wrap:wrap;
-    }
-
-    .total-big{
-        font-size:25px;
-    }
-}
-
 </style>
 </head>
 
-
 <body>
 
-<div class="app">
+<header class="header" id="header">
+  <div class="header-inner">
+    <div class="brand">
+      Split Bill ✨
+      <small>Patungan jadi gampang.</small>
+    </div>
 
+    <button class="home-btn" onclick="goHome()">🏠 Home</button>
+  </div>
 
-<!-- ============================================================
-     HEADER
-============================================================ -->
+  <div class="progress" id="progress">
+    <div class="progress-item" data-step="1"></div>
+    <div class="progress-item" data-step="2"></div>
+    <div class="progress-item" data-step="3"></div>
+    <div class="progress-item" data-step="4"></div>
+    <div class="progress-item" data-step="5"></div>
+  </div>
+</header>
 
-<div class="header">
+<main class="container">
 
-    <h1>✨ Split Bill</h1>
+  <!-- HOME -->
+  <section id="homeView"></section>
 
-    <p>
-        Hitung patungan tanpa ribet
+  <!-- STEP 1 -->
+  <section id="step1" class="step-view hidden">
+    <h1 class="page-title">📝 Buat Split Bill</h1>
+    <p class="page-subtitle">
+      Isi yang kamu tahu dulu. Sisanya bisa ditambahkan nanti.
     </p>
 
-    <div class="steps">
-
-        <div
-            class="step active"
-            id="bar1">
-        </div>
-
-        <div
-            class="step"
-            id="bar2">
-        </div>
-
-        <div
-            class="step"
-            id="bar3">
-        </div>
-
-        <div
-            class="step"
-            id="bar4">
-        </div>
-
-        <div
-            class="step"
-            id="bar5">
-        </div>
-
-    </div>
-
-</div>
-
-
-<div class="container">
-
-
-<!-- ============================================================
-     STEP 1
-============================================================ -->
-
-<section id="step1">
-
     <div class="card">
-
-        <h2>🌷 Mulai Split Bill</h2>
-
-        <div class="desc">
-            Isi nama kegiatan dan destination terlebih dahulu.
+      <div class="grid grid-2">
+        <div>
+          <label>Nama acara / trip</label>
+          <input id="tripName" placeholder="Contoh: Bandung Trip">
         </div>
-
-
-        <div class="field">
-
-            <label>
-                Nama Kegiatan
-            </label>
-
-            <input
-                id="tripName"
-                type="text"
-                placeholder="Contoh: Bandung Trip">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Destination / Area
-            </label>
-
-            <input
-                id="destination"
-                type="text"
-                placeholder="Contoh: Bandung">
-
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <h2>🍽️ Tempat</h2>
-
-        <div class="desc">
-
-            Tambahkan tempat yang punya bill.
-            Misalnya Coffee Shop A, Restaurant B,
-            dan seterusnya.
-
-        </div>
-
-
-        <div id="placesList"></div>
-
-
-        <button
-            type="button"
-            class="btn add"
-            id="addPlaceBtn">
-
-            ＋ Tambah Tempat
-
-        </button>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="btn primary"
-        id="toPeopleBtn">
-
-        Lanjut → Tambah Orang
-
-    </button>
-
-</section>
-
-
-
-<!-- ============================================================
-     STEP 2
-============================================================ -->
-
-<section
-    id="step2"
-    class="hidden">
-
-    <div class="card">
-
-        <h2>👯 Tambah Orang</h2>
-
-        <div class="desc">
-
-            Masukkan semua orang yang ikut
-            split bill.
-
-            <br>
-
-            Belum perlu pilih makanan di sini.
-
-        </div>
-
-
-        <div id="peopleList"></div>
-
-
-        <button
-            type="button"
-            class="btn add"
-            id="addPersonBtn">
-
-            ＋ Tambah Orang
-
-        </button>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="btn primary"
-        id="toAssignmentBtn">
-
-        OK — Mulai Pembagian ✨
-
-    </button>
-
-</section>
-
-
-
-<!-- ============================================================
-     STEP 3
-============================================================ -->
-
-<section
-    id="step3"
-    class="hidden">
-
-    <div class="card">
-
-        <h2>🍴 Siapa Makan Apa?</h2>
-
-        <div class="desc">
-
-            Pilih makanan yang dimakan masing-masing
-            orang untuk setiap tempat.
-
-            <br><br>
-
-            <b>
-                💡 Orang tidak harus memilih semua menu.
-            </b>
-
-        </div>
-
-
-        <div id="assignmentList"></div>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="btn primary"
-        id="toPayerBtn">
-
-        Lanjut → Siapa yang Bayar
-
-    </button>
-
-</section>
-
-
-
-<!-- ============================================================
-     STEP 4
-============================================================ -->
-
-<section
-    id="step4"
-    class="hidden">
-
-    <div class="card">
-
-        <h2>💳 Siapa yang Bayar?</h2>
-
-        <div class="desc">
-
-            Tentukan siapa yang membayar
-            masing-masing bill.
-
-        </div>
-
-
-        <div id="payerList"></div>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="btn green"
-        id="calculateBtn">
-
-        🧮 Hitung Split Bill
-
-    </button>
-
-</section>
-
-
-
-<!-- ============================================================
-     STEP 5
-============================================================ -->
-
-<section
-    id="step5"
-    class="hidden">
-
-
-    <div class="total-box">
 
         <div>
-            💰 Total Pengeluaran
+          <label>Destinasi</label>
+          <input id="destination" placeholder="Contoh: Bandung">
         </div>
-
-        <div
-            class="total-big"
-            id="grandTotal">
-
-            Rp0
-
-        </div>
-
+      </div>
     </div>
-
-
-    <!-- SHARE BOX -->
-
-    <div class="share-box">
-
-        <h3>
-            🔗 Share Bill
-        </h3>
-
-        <p>
-
-            Bagikan link ini ke teman-teman.
-            Data split bill tersimpan di dalam link.
-
-        </p>
-
-
-        <div
-            class="link-preview"
-            id="shareLink">
-        </div>
-
-
-        <button
-            type="button"
-            class="btn blue"
-            id="shareBtn">
-
-            🔗 Share Bill
-
-        </button>
-
-
-        <br>
-
-
-        <button
-            type="button"
-            class="btn secondary"
-            id="copyBtn">
-
-            📋 Copy Link
-
-        </button>
-
-    </div>
-
-
-    <!-- PERSON RESULT -->
 
     <div class="card">
-
-        <h2>
-            👤 Rekap Per Orang
-        </h2>
-
-        <div
-            id="personResults">
+      <div class="section-head">
+        <div>
+          <h2>💡 Konsep Draft</h2>
+          <p class="small">
+            Kamu belum perlu tahu semua orang dan semua pembagian sekarang.
+          </p>
         </div>
+      </div>
 
+      <div class="alert alert-warning">
+        <strong>Masih boleh belum lengkap.</strong><br>
+        Kamu bisa simpan sebagai Draft, lalu kembali lagi kapan saja untuk
+        menambahkan menu, orang, pembagian, atau payer.
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="saveDraftAndNext()">Lanjut ke Tempat & Menu →</button>
+      </div>
     </div>
+  </section>
 
+  <!-- STEP 2 -->
+  <section id="step2" class="step-view hidden">
+    <h1 class="page-title">🍜 Tempat & Menu</h1>
+    <p class="page-subtitle">
+      Tambahkan semua tempat makan dan menu. Tidak masalah kalau nanti ada perubahan.
+    </p>
 
-    <!-- TRANSFER -->
+    <div id="placesContainer"></div>
 
     <div class="card">
-
-        <h2>
-            💸 Transfer
-        </h2>
-
-        <div class="desc">
-
-            Ini adalah transfer yang perlu dilakukan
-            agar semua orang akhirnya membayar sesuai
-            bagiannya.
-
-        </div>
-
-
-        <div
-            id="transferResults">
-        </div>
-
+      <button class="btn btn-primary" onclick="addPlace()">＋ Tambah Tempat</button>
     </div>
 
+    <div class="bottom-actions">
+      <button class="btn btn-light" onclick="showStep(1)">← Kembali</button>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="saveDraft()">💾 Simpan Draft</button>
+        <button class="btn btn-primary" onclick="showStep(3)">Lanjut →</button>
+      </div>
+    </div>
+  </section>
 
-    <button
-        type="button"
-        class="btn secondary"
-        id="backBtn">
+  <!-- STEP 3 -->
+  <section id="step3" class="step-view hidden">
+    <h1 class="page-title">👥 Orang</h1>
+    <p class="page-subtitle">
+      Tambahkan orang yang ikut patungan. Bisa ditambah kapan saja.
+    </p>
 
-        ← Edit Pembagian
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <h2>Daftar Orang</h2>
+          <span class="small">Sekarang baru tahu 1 orang? Tidak masalah.</span>
+        </div>
 
-    </button>
+        <button class="btn btn-primary" onclick="addPerson()">＋ Tambah Orang</button>
+      </div>
 
-</section>
+      <div id="peopleContainer"></div>
+    </div>
 
+    <div class="bottom-actions">
+      <button class="btn btn-light" onclick="showStep(2)">← Kembali</button>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="saveDraft()">💾 Simpan Draft</button>
+        <button class="btn btn-primary" onclick="showStep(4)">Lanjut →</button>
+      </div>
+    </div>
+  </section>
 
-</div>
+  <!-- STEP 4 -->
+  <section id="step4" class="step-view hidden">
+    <h1 class="page-title">☑️ Pembagian</h1>
+    <p class="page-subtitle">
+      Tentukan siapa yang makan setiap menu. Bisa diedit kapan saja.
+    </p>
 
-</div>
+    <div id="assignmentContainer"></div>
 
+    <div class="card">
+      <h2>💳 Siapa yang bayar?</h2>
+      <p class="small">
+        Pilih payer untuk setiap tempat. Kalau belum tahu, boleh disimpan sebagai Draft.
+      </p>
 
+      <div id="payerContainer"></div>
+    </div>
+
+    <div id="validationBox"></div>
+
+    <div class="bottom-actions">
+      <button class="btn btn-light" onclick="showStep(3)">← Kembali</button>
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="saveDraft()">💾 Simpan Draft</button>
+        <button class="btn btn-primary" onclick="finalizeBill()">✨ Final & Lihat Hasil</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="resultView" class="hidden"></section>
+
+</main>
 
 <script>
+const STORAGE_KEY = "splitbill_trips_v2";
 
-/* ============================================================
-   DATA
-============================================================ */
+let trips = [];
+let currentTrip = null;
+let currentTripId = null;
+let currentStep = 1;
+let isDirty = false;
 
-let places = [];
-
-let people = [];
-
-let calculated = false;
-
-
-/* ============================================================
-   UTILITY
-============================================================ */
-
-function rupiah(value){
-
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            style:"currency",
-            currency:"IDR",
-            maximumFractionDigits:0
-        }
-    ).format(
-        Math.round(value || 0)
-    );
-
+function uid(prefix="id"){
+  return prefix + "_" + Math.random().toString(36).slice(2,9) + Date.now().toString(36);
 }
 
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
+function money(value){
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(Math.round(value || 0));
 }
 
-
-function makeId(){
-
-    return Math.random()
-        .toString(36)
-        .substring(2,9);
-
+function num(value){
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
 }
 
+function loadTrips(){
+  try{
+    trips = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  }catch{
+    trips = [];
+  }
+}
 
-/* ============================================================
-   PLACE
-============================================================ */
+function saveTrips(){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(trips));
+}
+
+function markDirty(){
+  isDirty = true;
+}
+
+function clone(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
+
+function newTrip(){
+  currentTrip = {
+    id:uid("trip"),
+    tripName:"",
+    destination:"",
+    createdAt:Date.now(),
+    updatedAt:Date.now(),
+    status:"draft",
+    places:[
+      createPlace()
+    ],
+    people:[]
+  };
+
+  currentTripId = currentTrip.id;
+  isDirty = true;
+
+  document.getElementById("tripName").value="";
+  document.getElementById("destination").value="";
+
+  showStep(1);
+}
 
 function createPlace(){
-
-    return {
-
-        id:makeId(),
-
-        name:"",
-
-        items:[],
-
-        discountPercent:0,
-
-        discountNominal:0,
-
-        servicePercent:0,
-
-        serviceNominal:0,
-
-        taxPercent:0,
-
-        taxNominal:0,
-
-        otherFee:0,
-
-        payer:""
-
-    };
-
+  return {
+    id:uid("place"),
+    name:"",
+    discountPercent:0,
+    discountNominal:0,
+    servicePercent:0,
+    serviceNominal:0,
+    taxPercent:0,
+    taxNominal:0,
+    otherFee:0,
+    payerId:"",
+    items:[
+      createItem()
+    ]
+  };
 }
-
 
 function createItem(){
-
-    return {
-
-        name:"",
-
-        price:0,
-
-        qty:1,
-
-        finalPrice:0
-
-    };
-
+  return {
+    id:uid("item"),
+    name:"",
+    price:0,
+    qty:1,
+    consumers:[]
+  };
 }
 
+function renderHome(){
+  const home = document.getElementById("homeView");
 
-/* ============================================================
-   ADD PLACE
-============================================================ */
+  document.querySelectorAll(".step-view").forEach(x=>x.classList.add("hidden"));
+  document.getElementById("resultView").classList.add("hidden");
 
-function addPlace(){
+  document.getElementById("progress").style.display="none";
 
-    const place =
-        createPlace();
+  let html = `
+    <div class="home-hero">
+      <h1>Split Bill ✨</h1>
+      <p class="page-subtitle">
+        Kelola semua patungan kamu di satu tempat.
+      </p>
 
-    place.items.push(
-        createItem()
-    );
+      <button class="btn btn-primary" onclick="newTrip()">
+        ＋ Buat Split Bill Baru
+      </button>
+    </div>
 
-    places.push(place);
+    <div class="section-head">
+      <div>
+        <h2>Bill Kamu</h2>
+        <span class="small">${trips.length} bill tersimpan</span>
+      </div>
+    </div>
+  `;
 
-    renderPlaces();
+  if(!trips.length){
+    html += `
+      <div class="empty">
+        <div class="empty-icon">🍰</div>
+        <h2>Belum ada Split Bill</h2>
+        <p class="page-subtitle">
+          Buat bill pertama kamu dan isi sedikit demi sedikit.
+        </p>
 
-}
+        <button class="btn btn-primary" onclick="newTrip()">
+          ＋ Buat Split Bill
+        </button>
+      </div>
+    `;
 
+    home.innerHTML=html;
+    return;
+  }
 
-/* ============================================================
-   DELETE PLACE
-============================================================ */
+  html += `<div class="trip-grid">`;
 
-function deletePlace(index){
+  [...trips]
+    .sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0))
+    .forEach(trip=>{
+      const calc = calculateTrip(trip);
 
-    places.splice(index,1);
+      const status = getStatus(trip);
 
-    renderPlaces();
+      html += `
+        <div class="trip-card">
+          <span class="badge ${status.class}">
+            ${status.icon} ${status.label}
+          </span>
 
-}
+          <h3>${esc(trip.tripName || "Untitled Split Bill")}</h3>
 
+          <div class="trip-destination">
+            📍 ${esc(trip.destination || "Destinasi belum diisi")}
+          </div>
 
-/* ============================================================
-   ADD ITEM
-============================================================ */
+          <div class="trip-total">
+            ${money(calc.total)}
+          </div>
 
-function addItem(placeIndex){
+          <div class="trip-info">
+            <span class="badge badge-purple">
+              🍜 ${trip.places.length} tempat
+            </span>
 
-    places[placeIndex]
-        .items
-        .push(
-            createItem()
-        );
+            <span class="badge badge-purple">
+              👥 ${trip.people.length} orang
+            </span>
+          </div>
 
-    renderPlaces();
+          <div class="small">
+            Terakhir diubah: ${formatDate(trip.updatedAt)}
+          </div>
 
-}
+          <div class="divider"></div>
 
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="openTrip('${trip.id}',false)">
+              ✏️ Edit
+            </button>
 
-/* ============================================================
-   DELETE ITEM
-============================================================ */
+            ${
+              status.complete
+              ?
+              `<button class="btn btn-secondary" onclick="openTrip('${trip.id}',true)">
+                📊 Hasil
+              </button>`
+              :
+              `<button class="btn btn-peach" onclick="openTrip('${trip.id}',false)">
+                ▶️ Lanjutkan
+              </button>`
+            }
 
-function deleteItem(
-    placeIndex,
-    itemIndex
-){
-
-    places[placeIndex]
-        .items
-        .splice(itemIndex,1);
-
-    renderPlaces();
-
-}
-
-
-/* ============================================================
-   CALCULATE PLACE
-============================================================ */
-
-function calculatePlace(place){
-
-    let subtotal = 0;
-
-    place.items.forEach(item=>{
-
-        subtotal +=
-            Number(item.price || 0) *
-            Number(item.qty || 1);
-
+            <button class="btn btn-danger" onclick="deleteTrip('${trip.id}')">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
     });
 
+  html += `</div>`;
 
-    const discount =
-        subtotal *
-        Number(
-            place.discountPercent || 0
-        ) / 100
-        +
-        Number(
-            place.discountNominal || 0
-        );
+  home.innerHTML=html;
+}
 
+function getStatus(trip){
+  const calc = calculateTrip(trip);
 
-    const afterDiscount =
-        Math.max(
-            0,
-            subtotal - discount
-        );
-
-
-    const service =
-        afterDiscount *
-        Number(
-            place.servicePercent || 0
-        ) / 100
-        +
-        Number(
-            place.serviceNominal || 0
-        );
-
-
-    const tax =
-        afterDiscount *
-        Number(
-            place.taxPercent || 0
-        ) / 100
-        +
-        Number(
-            place.taxNominal || 0
-        );
-
-
-    const other =
-        Number(
-            place.otherFee || 0
-        );
-
-
-    const total =
-        afterDiscount +
-        service +
-        tax +
-        other;
-
-
+  if(
+    trip.status==="completed" &&
+    calc.unassignedItems.length===0 &&
+    calc.missingPayers.length===0 &&
+    trip.people.length>0
+  ){
     return {
-
-        subtotal,
-
-        discount,
-
-        afterDiscount,
-
-        service,
-
-        tax,
-
-        other,
-
-        total
-
+      label:"Selesai",
+      icon:"✓",
+      class:"badge-complete",
+      complete:true
     };
+  }
 
-}
+  const hasSomething =
+    trip.people.length ||
+    trip.places.some(p=>p.name || p.items.some(i=>i.name));
 
-
-/* ============================================================
-   RENDER PLACES
-============================================================ */
-
-function renderPlaces(){
-
-    const container =
-        document.getElementById(
-            "placesList"
-        );
-
-
-    if(places.length === 0){
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                Belum ada tempat.<br>
-
-                Klik "+ Tambah Tempat".
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML =
-
-        places.map(
-            (place,pIndex)=>{
-
-                const bill =
-                    calculatePlace(place);
-
-
-                return `
-
-                <div class="place-card">
-
-
-                    <div class="place-header">
-
-                        <div>
-
-                            <div class="place-title">
-
-                                📍 Tempat ${pIndex+1}
-
-                            </div>
-
-                            <div class="place-subtitle">
-
-                                Isi nama tempat dan menu
-
-                            </div>
-
-                        </div>
-
-
-                        ${
-                            places.length > 1
-
-                            ?
-
-                            `
-
-                            <button
-
-                                type="button"
-
-                                class="small-btn red"
-
-                                data-delete-place="${pIndex}">
-
-                                Hapus
-
-                            </button>
-
-                            `
-
-                            :
-
-                            ""
-
-                        }
-
-                    </div>
-
-
-                    <div class="field">
-
-                        <label>
-                            Nama Tempat
-                        </label>
-
-                        <input
-
-                            type="text"
-
-                            class="place-name"
-
-                            data-place="${pIndex}"
-
-                            value="${escapeHTML(place.name)}"
-
-                            placeholder="Contoh: Coffee Shop A">
-
-                    </div>
-
-
-                    <div>
-
-                        ${
-                            place.items.map(
-                                (item,iIndex)=>{
-
-                                    const lineTotal =
-                                        Number(
-                                            item.price || 0
-                                        ) *
-                                        Number(
-                                            item.qty || 1
-                                        );
-
-
-                                    return `
-
-                                    <div class="menu-item">
-
-                                        <div class="menu-header">
-
-                                            <div class="menu-number">
-
-                                                🍴 MENU ${iIndex+1}
-
-                                            </div>
-
-
-                                            <button
-
-                                                type="button"
-
-                                                class="small-btn red"
-
-                                                data-delete-item="${pIndex}|${iIndex}">
-
-                                                Hapus
-
-                                            </button>
-
-                                        </div>
-
-
-                                        <div class="field">
-
-                                            <label>
-                                                Nama Menu
-                                            </label>
-
-                                            <input
-
-                                                type="text"
-
-                                                class="item-name"
-
-                                                data-place="${pIndex}"
-
-                                                data-item="${iIndex}"
-
-                                                value="${escapeHTML(item.name)}"
-
-                                                placeholder="Contoh: Nasi Goreng">
-
-                                        </div>
-
-
-                                        <div class="menu-grid">
-
-
-                                            <div>
-
-                                                <label>
-                                                    Harga
-                                                </label>
-
-                                                <input
-
-                                                    type="number"
-
-                                                    class="item-price"
-
-                                                    data-place="${pIndex}"
-
-                                                    data-item="${iIndex}"
-
-                                                    value="${item.price || ""}"
-
-                                                    min="0"
-
-                                                    placeholder="Rp">
-
-                                            </div>
-
-
-                                            <div>
-
-                                                <label>
-                                                    Qty
-                                                </label>
-
-                                                <input
-
-                                                    type="number"
-
-                                                    class="item-qty"
-
-                                                    data-place="${pIndex}"
-
-                                                    data-item="${iIndex}"
-
-                                                    value="${item.qty || 1}"
-
-                                                    min="1">
-
-                                            </div>
-
-
-                                            <div>
-
-                                                <label>
-                                                    Total
-                                                </label>
-
-                                                <input
-
-                                                    class="menu-total"
-
-                                                    value="${rupiah(lineTotal)}"
-
-                                                    readonly>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    `;
-
-                                }
-                            ).join("")
-                        }
-
-                    </div>
-
-
-                    <button
-
-                        type="button"
-
-                        class="btn add"
-
-                        data-add-item="${pIndex}">
-
-                        ＋ Tambah Menu
-
-                    </button>
-
-
-                    <div
-
-                        class="card"
-
-                        style="
-                            margin-top:12px;
-                            margin-bottom:0;
-                            background:#fff;
-                        ">
-
-
-                        <h2
-                            style="
-                                font-size:15px;
-                                color:#7062bd;
-                            ">
-
-                            ✨ Biaya Tambahan
-
-                        </h2>
-
-
-                        <div class="field">
-
-                            <label>
-                                Discount (%)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="discountPercent"
-
-                                value="${place.discountPercent || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 10">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                Discount (Rp)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="discountNominal"
-
-                                value="${place.discountNominal || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 10000">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                Service (%)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="servicePercent"
-
-                                value="${place.servicePercent || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 5">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                Service (Rp)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="serviceNominal"
-
-                                value="${place.serviceNominal || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 10000">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                PPN / Tax (%)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="taxPercent"
-
-                                value="${place.taxPercent || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 11">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                PPN / Tax (Rp)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="taxNominal"
-
-                                value="${place.taxNominal || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 5000">
-
-                        </div>
-
-
-                        <div class="field">
-
-                            <label>
-                                Other Fee (Rp)
-                            </label>
-
-                            <input
-
-                                type="number"
-
-                                class="place-field"
-
-                                data-place="${pIndex}"
-
-                                data-field="otherFee"
-
-                                value="${place.otherFee || ""}"
-
-                                min="0"
-
-                                placeholder="Contoh: 2000">
-
-                        </div>
-
-
-                        <div class="summary">
-
-
-                            <div class="summary-row">
-
-                                <span>
-                                    Subtotal
-                                </span>
-
-                                <span>
-                                    ${rupiah(bill.subtotal)}
-                                </span>
-
-                            </div>
-
-
-                            <div class="summary-row">
-
-                                <span>
-                                    Discount
-                                </span>
-
-                                <span>
-                                    - ${rupiah(bill.discount)}
-                                </span>
-
-                            </div>
-
-
-                            <div class="summary-row">
-
-                                <span>
-                                    Service
-                                </span>
-
-                                <span>
-                                    ${rupiah(bill.service)}
-                                </span>
-
-                            </div>
-
-
-                            <div class="summary-row">
-
-                                <span>
-                                    PPN / Tax
-                                </span>
-
-                                <span>
-                                    ${rupiah(bill.tax)}
-                                </span>
-
-                            </div>
-
-
-                            <div class="summary-row">
-
-                                <span>
-                                    Other Fee
-                                </span>
-
-                                <span>
-                                    ${rupiah(bill.other)}
-                                </span>
-
-                            </div>
-
-
-                            <div class="summary-row total">
-
-                                <span>
-                                    Total
-                                </span>
-
-                                <span>
-                                    ${rupiah(bill.total)}
-                                </span>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                `;
-
-            }
-        ).join("");
-
-}
-
-
-/* ============================================================
-   PEOPLE
-============================================================ */
-
-function addPerson(){
-
-    people.push({
-        name:""
-    });
-
-    renderPeople();
-
-}
-
-
-function deletePerson(index){
-
-    people.splice(index,1);
-
-    renderPeople();
-
-}
-
-
-function renderPeople(){
-
-    const container =
-        document.getElementById(
-            "peopleList"
-        );
-
-
-    if(people.length === 0){
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                Belum ada orang.
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML =
-
-        people.map(
-            (person,index)=>{
-
-                return `
-
-                <div class="people-row">
-
-                    <input
-
-                        type="text"
-
-                        class="person-input"
-
-                        data-index="${index}"
-
-                        value="${escapeHTML(person.name)}"
-
-                        placeholder="Nama orang ${index+1}">
-
-
-                    <button
-
-                        type="button"
-
-                        class="delete-person"
-
-                        data-delete-person="${index}">
-
-                        ×
-
-                    </button>
-
-                </div>
-
-                `;
-
-            }
-        ).join("");
-
-}
-
-
-/* ============================================================
-   VALIDATE FIRST STEP
-============================================================ */
-
-function validatePlaces(){
-
-    const trip =
-        document
-        .getElementById("tripName")
-        .value
-        .trim();
-
-
-    const destination =
-        document
-        .getElementById("destination")
-        .value
-        .trim();
-
-
-    if(!trip){
-
-        alert(
-            "Isi Nama Kegiatan terlebih dahulu."
-        );
-
-        return false;
-    }
-
-
-    if(!destination){
-
-        alert(
-            "Isi Destination terlebih dahulu."
-        );
-
-        return false;
-    }
-
-
-    if(places.length === 0){
-
-        alert(
-            "Tambahkan minimal 1 tempat."
-        );
-
-        return false;
-    }
-
-
-    for(
-        let p=0;
-        p<places.length;
-        p++
-    ){
-
-        const place =
-            places[p];
-
-
-        if(!place.name.trim()){
-
-            alert(
-                "Nama tempat nomor " +
-                (p+1) +
-                " belum diisi."
-            );
-
-            return false;
-        }
-
-
-        if(place.items.length === 0){
-
-            alert(
-                "Tempat " +
-                place.name +
-                " belum memiliki menu."
-            );
-
-            return false;
-        }
-
-
-        for(
-            let i=0;
-            i<place.items.length;
-            i++
-        ){
-
-            const item =
-                place.items[i];
-
-
-            if(!item.name.trim()){
-
-                alert(
-                    "Nama menu nomor " +
-                    (i+1) +
-                    " di " +
-                    place.name +
-                    " belum diisi."
-                );
-
-                return false;
-            }
-
-
-            if(Number(item.price) <= 0){
-
-                alert(
-                    "Harga menu " +
-                    item.name +
-                    " belum diisi."
-                );
-
-                return false;
-            }
-
-
-            if(Number(item.qty) < 1){
-
-                alert(
-                    "Qty menu " +
-                    item.name +
-                    " harus minimal 1."
-                );
-
-                return false;
-            }
-
-        }
-
-    }
-
-
-    return true;
-
-}
-
-
-/* ============================================================
-   PREPARE FINAL PRICE
-============================================================ */
-
-function prepareFinalPrices(){
-
-    places.forEach(
-        place=>{
-
-            const bill =
-                calculatePlace(place);
-
-
-            if(bill.subtotal <= 0)
-                return;
-
-
-            place.items.forEach(
-                item=>{
-
-                    const base =
-                        Number(item.price) *
-                        Number(item.qty);
-
-
-                    const proportion =
-                        base /
-                        bill.subtotal;
-
-
-                    item.finalPrice =
-                        base +
-                        (
-                            bill.total -
-                            bill.subtotal
-                        ) *
-                        proportion;
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* ============================================================
-   ASSIGNMENT
-============================================================ */
-
-function renderAssignment(){
-
-    const container =
-        document.getElementById(
-            "assignmentList"
-        );
-
-
-    container.innerHTML =
-
-        places.map(
-            (place,pIndex)=>{
-
-                const bill =
-                    calculatePlace(place);
-
-
-                return `
-
-                <div class="assignment-place">
-
-                    <div class="assignment-title">
-
-                        📍
-                        ${escapeHTML(place.name)}
-
-                    </div>
-
-
-                    <div class="assignment-total">
-
-                        Total bill:
-                        ${rupiah(bill.total)}
-
-                    </div>
-
-
-                    ${
-                        people.map(
-                            (person,personIndex)=>{
-
-                                return `
-
-                                <div class="assignment-person">
-
-                                    <div class="person-name">
-
-                                        👤
-                                        ${escapeHTML(person.name)}
-
-                                    </div>
-
-
-                                    ${
-                                        place.items.map(
-                                            (item,itemIndex)=>{
-
-                                                return `
-
-                                                <label
-                                                    class="check-item">
-
-                                                    <input
-
-                                                        type="checkbox"
-
-                                                        class="food-check"
-
-                                                        data-place="${pIndex}"
-
-                                                        data-person="${personIndex}"
-
-                                                        data-item="${itemIndex}">
-
-
-                                                    <div
-                                                        class="check-info">
-
-                                                        <div
-                                                            class="check-name">
-
-                                                            ${escapeHTML(item.name)}
-
-                                                        </div>
-
-
-                                                        <div
-                                                            class="check-price">
-
-                                                            ${rupiah(item.finalPrice)}
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </label>
-
-                                                `;
-
-                                            }
-                                        ).join("")
-                                    }
-
-                                </div>
-
-                                `;
-
-                            }
-                        ).join("")
-                    }
-
-                </div>
-
-                `;
-
-            }
-        ).join("");
-
-}
-
-
-/* ============================================================
-   VALIDATE ASSIGNMENT
-============================================================ */
-
-function validateAssignment(){
-
-    for(
-        let p=0;
-        p<places.length;
-        p++
-    ){
-
-        const place =
-            places[p];
-
-
-        for(
-            let i=0;
-            i<place.items.length;
-            i++
-        ){
-
-            const checked =
-                document.querySelectorAll(
-                    `.food-check[data-place="${p}"][data-item="${i}"]:checked`
-                );
-
-
-            if(checked.length === 0){
-
-                alert(
-                    'Menu "' +
-                    place.items[i].name +
-                    '" di "' +
-                    place.name +
-                    '" belum dibagikan ke siapa pun.'
-                );
-
-                return false;
-            }
-
-        }
-
-    }
-
-
-    return true;
-
-}
-
-
-/* ============================================================
-   PAYER
-============================================================ */
-
-function renderPayers(){
-
-    const container =
-        document.getElementById(
-            "payerList"
-        );
-
-
-    container.innerHTML =
-
-        places.map(
-            (place,index)=>{
-
-                const bill =
-                    calculatePlace(place);
-
-
-                return `
-
-                <div class="payer-card">
-
-
-                    <div class="payer-title">
-
-                        📍
-                        ${escapeHTML(place.name)}
-
-                    </div>
-
-
-                    <div class="payer-total">
-
-                        Total bill:
-                        ${rupiah(bill.total)}
-
-                    </div>
-
-
-                    <label>
-                        Dibayar oleh
-                    </label>
-
-
-                    <select
-
-                        class="payer-select"
-
-                        data-place="${index}">
-
-                        <option value="">
-
-                            -- Pilih orang --
-
-                        </option>
-
-
-                        ${
-                            people.map(
-                                (person,pIndex)=>{
-
-                                    return `
-
-                                    <option
-
-                                        value="${pIndex}"
-
-                                        ${
-                                            String(place.payer) ===
-                                            String(pIndex)
-
-                                            ? "selected"
-
-                                            : ""
-                                        }>
-
-                                        ${escapeHTML(person.name)}
-
-                                    </option>
-
-                                    `;
-
-                                }
-                            ).join("")
-                        }
-
-                    </select>
-
-                </div>
-
-                `;
-
-            }
-        ).join("");
-
-}
-
-
-/* ============================================================
-   CALCULATE SETTLEMENT
-============================================================ */
-
-function calculateSettlement(){
-
-    const owed =
-        people.map(
-            ()=>0
-        );
-
-
-    const paid =
-        people.map(
-            ()=>0
-        );
-
-
-    places.forEach(
-        (place,pIndex)=>{
-
-            place.items.forEach(
-                (item,itemIndex)=>{
-
-                    const checked =
-                        Array.from(
-                            document.querySelectorAll(
-                                `.food-check[data-place="${pIndex}"][data-item="${itemIndex}"]:checked`
-                            )
-                        );
-
-
-                    const count =
-                        checked.length;
-
-
-                    if(count === 0)
-                        return;
-
-
-                    const share =
-                        item.finalPrice /
-                        count;
-
-
-                    checked.forEach(
-                        check=>{
-
-                            const personIndex =
-                                Number(
-                                    check.dataset.person
-                                );
-
-
-                            owed[personIndex] +=
-                                share;
-
-                        }
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    places.forEach(
-        place=>{
-
-            const payer =
-                Number(place.payer);
-
-
-            const bill =
-                calculatePlace(place);
-
-
-            if(
-                !Number.isNaN(payer) &&
-                people[payer]
-            ){
-
-                paid[payer] +=
-                    bill.total;
-
-            }
-
-        }
-    );
-
-
-    const balance =
-        people.map(
-            (person,index)=>{
-
-                return (
-                    paid[index] -
-                    owed[index]
-                );
-
-            }
-        );
-
-
+  if(hasSomething){
     return {
-
-        owed,
-
-        paid,
-
-        balance
-
+      label:"Draft / Belum Lengkap",
+      icon:"✎",
+      class:"badge-incomplete",
+      complete:false
     };
+  }
 
+  return {
+    label:"Draft",
+    icon:"📝",
+    class:"badge-draft",
+    complete:false
+  };
 }
 
+function formatDate(timestamp){
+  if(!timestamp) return "-";
 
-/* ============================================================
-   GENERATE TRANSFERS
-============================================================ */
-
-function generateTransfers(
-    balance
-){
-
-    const creditors = [];
-
-    const debtors = [];
-
-
-    balance.forEach(
-        (amount,index)=>{
-
-            const rounded =
-                Math.round(amount);
-
-
-            if(rounded > 0){
-
-                creditors.push({
-
-                    person:index,
-
-                    amount:rounded
-
-                });
-
-            }
-
-
-            if(rounded < 0){
-
-                debtors.push({
-
-                    person:index,
-
-                    amount:
-                        Math.abs(rounded)
-
-                });
-
-            }
-
-        }
-    );
-
-
-    const transfers = [];
-
-
-    let i = 0;
-
-    let j = 0;
-
-
-    while(
-        i < debtors.length &&
-        j < creditors.length
-    ){
-
-        const debtor =
-            debtors[i];
-
-
-        const creditor =
-            creditors[j];
-
-
-        const amount =
-            Math.min(
-                debtor.amount,
-                creditor.amount
-            );
-
-
-        if(amount > 0){
-
-            transfers.push({
-
-                from:
-                    debtor.person,
-
-                to:
-                    creditor.person,
-
-                amount
-
-            });
-
-        }
-
-
-        debtor.amount -=
-            amount;
-
-
-        creditor.amount -=
-            amount;
-
-
-        if(debtor.amount <= 0)
-            i++;
-
-
-        if(creditor.amount <= 0)
-            j++;
-
-    }
-
-
-    return transfers;
-
+  return new Date(timestamp).toLocaleString("id-ID",{
+    day:"2-digit",
+    month:"short",
+    year:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
 }
 
-
-/* ============================================================
-   RENDER RESULTS
-============================================================ */
-
-function renderResults(){
-
-    const settlement =
-        calculateSettlement();
-
-
-    const total =
-        places.reduce(
-            (sum,place)=>
-                sum +
-                calculatePlace(place).total,
-            0
-        );
-
-
-    document
-        .getElementById(
-            "grandTotal"
-        )
-        .textContent =
-        rupiah(total);
-
-
-    const container =
-        document.getElementById(
-            "personResults"
-        );
-
-
-    container.innerHTML =
-
-        people.map(
-            (person,index)=>{
-
-                const owed =
-                    settlement.owed[index];
-
-
-                const paid =
-                    settlement.paid[index];
-
-
-                const balance =
-                    settlement.balance[index];
-
-
-                return `
-
-                <div class="result-person">
-
-
-                    <div class="result-head">
-
-                        <div class="result-name">
-
-                            ${escapeHTML(person.name)}
-
-                        </div>
-
-
-                        <div>
-
-                            ${rupiah(owed)}
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="result-body">
-
-
-                        <div class="result-row">
-
-                            <span>
-                                Seharusnya bayar
-                            </span>
-
-                            <b>
-                                ${rupiah(owed)}
-                            </b>
-
-                        </div>
-
-
-                        <div class="result-row">
-
-                            <span>
-                                Sudah dibayar
-                            </span>
-
-                            <b>
-                                ${rupiah(paid)}
-                            </b>
-
-                        </div>
-
-
-                        ${
-                            balance > 0
-
-                            ?
-
-                            `
-
-                            <div
-                                class="balance-box balance-positive">
-
-                                🟢
-                                Lebih bayar
-                                <b>
-                                    ${rupiah(balance)}
-                                </b>
-
-                            </div>
-
-                            `
-
-                            :
-
-                            balance < 0
-
-                            ?
-
-                            `
-
-                            <div
-                                class="balance-box balance-negative">
-
-                                🔴
-                                Masih kurang bayar
-                                <b>
-                                    ${rupiah(
-                                        Math.abs(balance)
-                                    )}
-                                </b>
-
-                            </div>
-
-                            `
-
-                            :
-
-                            `
-
-                            <div
-                                class="balance-box balance-positive">
-
-                                ✅
-                                Sudah pas
-
-                            </div>
-
-                            `
-                        }
-
-                    </div>
-
-                </div>
-
-                `;
-
-            }
-        ).join("");
-
-
-    const transfers =
-        generateTransfers(
-            settlement.balance
-        );
-
-
-    const transferContainer =
-        document.getElementById(
-            "transferResults"
-        );
-
-
-    if(transfers.length === 0){
-
-        transferContainer.innerHTML = `
-
-            <div class="success">
-
-                🎉 Semua pembayaran sudah seimbang.
-                Tidak ada transfer tambahan.
-
-            </div>
-
-        `;
-
-    }else{
-
-        transferContainer.innerHTML =
-
-            transfers.map(
-                transfer=>{
-
-                    return `
-
-                    <div class="transfer-card">
-
-
-                        <div class="transfer-line">
-
-
-                            <div
-                                class="transfer-person">
-
-                                ${escapeHTML(
-                                    people[
-                                        transfer.from
-                                    ].name
-                                )}
-
-                            </div>
-
-
-                            <div
-                                class="transfer-arrow">
-
-                                →
-
-                            </div>
-
-
-                            <div
-                                class="transfer-person">
-
-                                ${escapeHTML(
-                                    people[
-                                        transfer.to
-                                    ].name
-                                )}
-
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="transfer-amount"
-                            style="
-                                margin-top:10px;
-                                text-align:center;
-                            ">
-
-                            ${rupiah(
-                                transfer.amount
-                            )}
-
-                        </div>
-
-                    </div>
-
-                    `;
-
-                }
-            ).join("");
-
-    }
-
-
-    return settlement;
-
+function esc(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 }
 
+function persistCurrentTrip(){
+  if(!currentTrip) return;
 
-/* ============================================================
-   SHARE LINK
-============================================================ */
+  currentTrip.updatedAt=Date.now();
 
-function createShareLink(){
+  const index=trips.findIndex(t=>t.id===currentTrip.id);
 
-    const data = {
+  if(index>=0){
+    trips[index]=clone(currentTrip);
+  }else{
+    trips.push(clone(currentTrip));
+  }
 
-        tripName:
-            document.getElementById(
-                "tripName"
-            ).value,
-
-        destination:
-            document.getElementById(
-                "destination"
-            ).value,
-
-        places,
-
-        people
-
-    };
-
-
-    const json =
-        JSON.stringify(data);
-
-
-    const encoded =
-        btoa(
-            encodeURIComponent(json)
-                .replace(
-                    /%([0-9A-F]{2})/g,
-                    function(match,p1){
-
-                        return String.fromCharCode(
-                            parseInt(p1,16)
-                        );
-
-                    }
-                )
-        );
-
-
-    const url =
-        window.location.origin +
-        window.location.pathname +
-        "#bill=" +
-        encoded;
-
-
-    return url;
-
+  saveTrips();
+  isDirty=false;
 }
 
+function saveDraft(){
+  if(!currentTrip) return;
 
-/* ============================================================
-   LOAD SHARE LINK
-============================================================ */
+  syncTripInfo();
 
-function loadFromShareLink(){
+  currentTrip.status="draft";
+  persistCurrentTrip();
 
-    const hash =
-        window.location.hash;
-
-
-    if(
-        !hash.startsWith("#bill=")
-    ){
-
-        return false;
-
-    }
-
-
-    try{
-
-        const encoded =
-            hash.substring(6);
-
-
-        const json =
-            decodeURIComponent(
-
-                Array.prototype.map.call(
-                    atob(encoded),
-                    function(c){
-
-                        return "%" +
-                        (
-                            "00" +
-                            c.charCodeAt(0)
-                                .toString(16)
-                        )
-                        .slice(-2);
-
-                    }
-                ).join("")
-
-            );
-
-
-        const data =
-            JSON.parse(json);
-
-
-        document
-            .getElementById(
-                "tripName"
-            )
-            .value =
-            data.tripName || "";
-
-
-        document
-            .getElementById(
-                "destination"
-            )
-            .value =
-            data.destination || "";
-
-
-        places =
-            data.places || [];
-
-
-        people =
-            data.people || [];
-
-
-        prepareFinalPrices();
-
-
-        showStep(1);
-
-
-        return true;
-
-    }catch(error){
-
-        console.error(error);
-
-        return false;
-
-    }
-
+  showToast("Draft berhasil disimpan 💾");
+  renderHome();
 }
 
+function saveDraftAndNext(){
+  syncTripInfo();
 
-/* ============================================================
-   SHOW STEP
-============================================================ */
+  if(!currentTrip.tripName.trim()){
+    currentTrip.tripName="Untitled Split Bill";
+  }
+
+  currentTrip.status="draft";
+  persistCurrentTrip();
+
+  showStep(2);
+}
+
+function syncTripInfo(){
+  if(!currentTrip) return;
+
+  currentTrip.tripName=document.getElementById("tripName").value.trim();
+  currentTrip.destination=document.getElementById("destination").value.trim();
+
+  markDirty();
+}
+
+function openTrip(id,viewResult=false){
+  const found=trips.find(t=>t.id===id);
+
+  if(!found) return;
+
+  currentTrip=clone(found);
+  currentTripId=id;
+  isDirty=false;
+
+  document.getElementById("tripName").value=currentTrip.tripName || "";
+  document.getElementById("destination").value=currentTrip.destination || "";
+
+  if(viewResult){
+    renderResults();
+    showStep(5);
+  }else{
+    showStep(1);
+  }
+}
+
+function deleteTrip(id){
+  const trip=trips.find(t=>t.id===id);
+
+  if(!trip) return;
+
+  if(!confirm(`Hapus "${trip.tripName || "Split Bill ini"}"?`)) return;
+
+  trips=trips.filter(t=>t.id!==id);
+  saveTrips();
+
+  renderHome();
+}
+
+function goHome(){
+  if(
+    currentTrip &&
+    isDirty &&
+    !confirm("Kembali ke Home?\nPerubahan yang belum disimpan akan hilang.")
+  ){
+    return;
+  }
+
+  currentTrip=null;
+  currentTripId=null;
+  isDirty=false;
+
+  renderHome();
+}
 
 function showStep(step){
+  currentStep=step;
 
-    for(
-        let i=1;
-        i<=5;
-        i++
-    ){
+  document.getElementById("homeView").classList.add("hidden");
+  document.getElementById("resultView").classList.add("hidden");
 
-        document
-            .getElementById(
-                "step"+i
-            )
-            .classList.toggle(
-                "hidden",
-                i !== step
-            );
+  document.querySelectorAll(".step-view").forEach(x=>x.classList.add("hidden"));
 
+  if(step===5){
+    document.getElementById("resultView").classList.remove("hidden");
+  }else{
+    document.getElementById("step"+step).classList.remove("hidden");
+  }
 
-        document
-            .getElementById(
-                "bar"+i
-            )
-            .classList.toggle(
-                "active",
-                i <= step
-            );
+  document.getElementById("progress").style.display =
+    step===5 ? "none" : "flex";
 
-    }
+  document.querySelectorAll(".progress-item").forEach(el=>{
+    el.classList.toggle("active",Number(el.dataset.step)<=step);
+  });
 
+  if(step===1){
+    document.getElementById("tripName").value=currentTrip?.tripName || "";
+    document.getElementById("destination").value=currentTrip?.destination || "";
+  }
 
-    window.scrollTo({
+  if(step===2) renderPlaces();
+  if(step===3) renderPeople();
+  if(step===4){
+    renderAssignment();
+    renderPayers();
+    renderValidation();
+  }
 
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
+/* =========================
+   PLACES & ITEMS
+========================= */
 
-/* ============================================================
-   EVENTS
-============================================================ */
+function addPlace(){
+  currentTrip.places.push(createPlace());
+  markDirty();
+  renderPlaces();
+}
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+function deletePlace(placeId){
+  if(currentTrip.places.length===1){
+    alert("Minimal harus ada 1 tempat.");
+    return;
+  }
 
-        if(
-            !loadFromShareLink()
-        ){
+  if(!confirm("Hapus tempat ini beserta semua menunya?")) return;
 
-            addPlace();
+  currentTrip.places=currentTrip.places.filter(p=>p.id!==placeId);
 
+  markDirty();
+  renderPlaces();
+}
+
+function addItem(placeId){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+  if(!place) return;
+
+  place.items.push(createItem());
+
+  markDirty();
+  renderPlaces();
+}
+
+function deleteItem(placeId,itemId){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+
+  if(!place) return;
+
+  if(place.items.length===1){
+    alert("Minimal harus ada 1 menu. Kalau belum ada menu, kosongkan namanya saja.");
+    return;
+  }
+
+  place.items=place.items.filter(i=>i.id!==itemId);
+
+  markDirty();
+  renderPlaces();
+}
+
+function updatePlace(placeId,field,value){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+
+  if(!place) return;
+
+  place[field]=value;
+  markDirty();
+
+  if(field==="discountPercent" ||
+     field==="discountNominal" ||
+     field==="servicePercent" ||
+     field==="serviceNominal" ||
+     field==="taxPercent" ||
+     field==="taxNominal" ||
+     field==="otherFee"){
+    updatePlaceTotal(placeId);
+  }
+}
+
+function updateItem(placeId,itemId,field,value){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+  const item=place?.items.find(i=>i.id===itemId);
+
+  if(!item) return;
+
+  if(field==="price" || field==="qty"){
+    item[field]=Math.max(0,num(value));
+  }else{
+    item[field]=value;
+  }
+
+  markDirty();
+
+  if(field==="price" || field==="qty"){
+    updatePlaceTotal(placeId);
+  }
+}
+
+function calculatePlace(place){
+  const validItems=place.items.filter(i=>i.name.trim());
+
+  const subtotal=validItems.reduce(
+    (sum,i)=>sum + num(i.price)*Math.max(1,num(i.qty)),
+    0
+  );
+
+  const discount =
+    subtotal * num(place.discountPercent)/100 +
+    num(place.discountNominal);
+
+  const afterDiscount=Math.max(0,subtotal-discount);
+
+  const service =
+    afterDiscount * num(place.servicePercent)/100 +
+    num(place.serviceNominal);
+
+  const tax =
+    afterDiscount * num(place.taxPercent)/100 +
+    num(place.taxNominal);
+
+  const other=num(place.otherFee);
+
+  const total=Math.max(0,afterDiscount+service+tax+other);
+
+  return {
+    subtotal,
+    discount,
+    afterDiscount,
+    service,
+    tax,
+    other,
+    total
+  };
+}
+
+function updatePlaceTotal(placeId){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+
+  if(!place) return;
+
+  const el=document.querySelector(`[data-place-total="${placeId}"]`);
+
+  if(el){
+    el.textContent=money(calculatePlace(place).total);
+  }
+}
+
+function renderPlaces(){
+  const container=document.getElementById("placesContainer");
+
+  if(!currentTrip){
+    container.innerHTML="";
+    return;
+  }
+
+  container.innerHTML=currentTrip.places.map((place,index)=>{
+    const calc=calculatePlace(place);
+
+    return `
+      <div class="place-card">
+
+        <div class="place-header">
+          <div>
+            <div class="small">Tempat ${index+1}</div>
+
+            <input
+              style="margin-top:6px;font-weight:800"
+              value="${esc(place.name)}"
+              placeholder="Contoh: Mie Gacoan"
+              onchange="updatePlace('${place.id}','name',this.value)"
+            >
+          </div>
+
+          <button class="btn btn-danger"
+            onclick="deletePlace('${place.id}')">
+            🗑️ Hapus Tempat
+          </button>
+        </div>
+
+        <div class="place-body">
+
+          <div class="section-head">
+            <h3>🍽️ Menu</h3>
+
+            <button class="btn btn-secondary"
+              onclick="addItem('${place.id}')">
+              ＋ Tambah Menu
+            </button>
+          </div>
+
+          ${place.items.map(item=>`
+            <div class="item-card">
+
+              <div class="item-top">
+                <div style="flex:1">
+                  <input
+                    value="${esc(item.name)}"
+                    placeholder="Nama menu"
+                    onchange="updateItem('${place.id}','${item.id}','name',this.value)"
+                  >
+
+                  <div class="grid grid-2" style="margin-top:10px">
+
+                    <div>
+                      <label>Harga</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value="${num(item.price)}"
+                        onchange="updateItem('${place.id}','${item.id}','price',this.value)"
+                      >
+                    </div>
+
+                    <div>
+                      <label>Qty</label>
+                      <input
+                        type="number"
+                        min="1"
+                        value="${Math.max(1,num(item.qty))}"
+                        onchange="updateItem('${place.id}','${item.id}','qty',this.value)"
+                      >
+                    </div>
+
+                  </div>
+                </div>
+
+                <button class="btn btn-danger"
+                  onclick="deleteItem('${place.id}','${item.id}')">
+                  🗑️
+                </button>
+              </div>
+
+              <div class="item-meta">
+                Total: <strong>${money(num(item.price)*Math.max(1,num(item.qty)))}</strong>
+              </div>
+
+            </div>
+          `).join("")}
+
+          <div class="divider"></div>
+
+          <h3>💸 Biaya Tambahan</h3>
+
+          <div class="grid grid-3">
+
+            <div>
+              <label>Discount %</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.discountPercent)}"
+                onchange="updatePlace('${place.id}','discountPercent',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Discount Nominal</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.discountNominal)}"
+                onchange="updatePlace('${place.id}','discountNominal',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Service %</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.servicePercent)}"
+                onchange="updatePlace('${place.id}','servicePercent',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Service Nominal</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.serviceNominal)}"
+                onchange="updatePlace('${place.id}','serviceNominal',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Tax / PPN %</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.taxPercent)}"
+                onchange="updatePlace('${place.id}','taxPercent',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Tax / PPN Nominal</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.taxNominal)}"
+                onchange="updatePlace('${place.id}','taxNominal',this.value)"
+              >
+            </div>
+
+            <div>
+              <label>Biaya Lainnya</label>
+              <input
+                type="number"
+                min="0"
+                value="${num(place.otherFee)}"
+                onchange="updatePlace('${place.id}','otherFee',this.value)"
+              >
+            </div>
+
+          </div>
+
+          <div class="place-total">
+            <span>Total Tempat</span>
+            <strong data-place-total="${place.id}">
+              ${money(calc.total)}
+            </strong>
+          </div>
+
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* =========================
+   PEOPLE
+========================= */
+
+function addPerson(){
+  currentTrip.people.push({
+    id:uid("person"),
+    name:""
+  });
+
+  markDirty();
+  renderPeople();
+}
+
+function deletePerson(personId){
+  if(!confirm("Hapus orang ini? Pembagian menu yang terkait juga akan dihapus.")) return;
+
+  currentTrip.people=currentTrip.people.filter(p=>p.id!==personId);
+
+  currentTrip.places.forEach(place=>{
+    place.items.forEach(item=>{
+      item.consumers=(item.consumers||[]).filter(id=>id!==personId);
+    });
+
+    if(place.payerId===personId){
+      place.payerId="";
+    }
+  });
+
+  markDirty();
+  renderPeople();
+}
+
+function updatePerson(personId,value){
+  const person=currentTrip.people.find(p=>p.id===personId);
+
+  if(!person) return;
+
+  person.name=value;
+  markDirty();
+}
+
+function renderPeople(){
+  const container=document.getElementById("peopleContainer");
+
+  if(!currentTrip.people.length){
+    container.innerHTML=`
+      <div class="empty">
+        <div class="empty-icon">👥</div>
+        <h3>Belum ada orang</h3>
+        <p class="small">
+          Tidak masalah. Tambahkan nanti saat sudah tahu siapa saja yang ikut.
+        </p>
+
+        <button class="btn btn-primary" onclick="addPerson()">
+          ＋ Tambah Orang
+        </button>
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML=`
+    <div class="people-list">
+      ${currentTrip.people.map((person,index)=>`
+        <div class="person-card">
+          <div class="person-row">
+            <div class="avatar">${index%2===0?"👩":"👨"}</div>
+
+            <input
+              class="person-name"
+              value="${esc(person.name)}"
+              placeholder="Nama orang"
+              onchange="updatePerson('${person.id}',this.value)"
+            >
+
+            <button
+              class="btn btn-danger"
+              style="padding:9px 11px"
+              onclick="deletePerson('${person.id}')">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+/* =========================
+   ASSIGNMENT
+========================= */
+
+function toggleConsumer(placeId,itemId,personId,checked){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+  const item=place?.items.find(i=>i.id===itemId);
+
+  if(!item) return;
+
+  item.consumers=item.consumers || [];
+
+  if(checked){
+    if(!item.consumers.includes(personId)){
+      item.consumers.push(personId);
+    }
+  }else{
+    item.consumers=item.consumers.filter(id=>id!==personId);
+  }
+
+  markDirty();
+  renderValidation();
+}
+
+function renderAssignment(){
+  const container=document.getElementById("assignmentContainer");
+
+  if(!currentTrip.people.length){
+    container.innerHTML=`
+      <div class="alert alert-warning">
+        <strong>Belum ada orang.</strong><br>
+        Tambahkan minimal satu orang terlebih dahulu sebelum melakukan pembagian.
+      </div>
+    `;
+    return;
+  }
+
+  const validPlaces=currentTrip.places.filter(
+    p=>p.name.trim() || p.items.some(i=>i.name.trim())
+  );
+
+  container.innerHTML=validPlaces.map(place=>{
+
+    const validItems=place.items.filter(i=>i.name.trim());
+
+    return `
+      <div class="card assignment-place">
+        <h2>🍜 ${esc(place.name || "Tempat tanpa nama")}</h2>
+
+        ${
+          validItems.length
+          ?
+          validItems.map(item=>`
+            <div class="assignment-item">
+
+              <div class="assignment-title">
+                ${esc(item.name)}
+                <span class="small">
+                  — ${money(num(item.price)*Math.max(1,num(item.qty)))}
+                </span>
+              </div>
+
+              <div class="small" style="margin-bottom:10px">
+                Siapa yang makan?
+              </div>
+
+              <div class="checkbox-grid">
+                ${currentTrip.people.map(person=>`
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      ${item.consumers?.includes(person.id)?"checked":""}
+                      onchange="
+                        toggleConsumer(
+                          '${place.id}',
+                          '${item.id}',
+                          '${person.id}',
+                          this.checked
+                        )
+                      "
+                    >
+
+                    ${esc(person.name || "Tanpa Nama")}
+                  </label>
+                `).join("")}
+              </div>
+
+              ${
+                !item.consumers?.length
+                ?
+                `<div class="small" style="margin-top:10px;color:#b96e32">
+                  ⚠️ Belum ada yang dipilih.
+                </div>`
+                :
+                ""
+              }
+
+            </div>
+          `).join("")
+          :
+          `<div class="small">Belum ada menu yang valid.</div>`
+        }
+      </div>
+    `;
+  }).join("");
+}
+
+/* =========================
+   PAYER
+========================= */
+
+function setPayer(placeId,personId){
+  const place=currentTrip.places.find(p=>p.id===placeId);
+
+  if(!place) return;
+
+  place.payerId=personId;
+  markDirty();
+}
+
+function renderPayers(){
+  const container=document.getElementById("payerContainer");
+
+  if(!currentTrip.people.length){
+    container.innerHTML=`
+      <div class="small">
+        Tambahkan orang terlebih dahulu.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML=currentTrip.places.map(place=>`
+    <div style="margin-bottom:15px">
+
+      <label>${esc(place.name || "Tempat tanpa nama")}</label>
+
+      <select
+        style="
+          width:100%;
+          padding:12px;
+          border:1px solid var(--border);
+          border-radius:13px;
+          background:white;
+          color:var(--text)
+        "
+        onchange="setPayer('${place.id}',this.value)"
+      >
+        <option value="">-- Belum ditentukan --</option>
+
+        ${currentTrip.people.map(person=>`
+          <option
+            value="${person.id}"
+            ${place.payerId===person.id?"selected":""}
+          >
+            ${esc(person.name || "Tanpa Nama")}
+          </option>
+        `).join("")}
+
+      </select>
+
+    </div>
+  `).join("");
+}
+
+/* =========================
+   VALIDATION
+========================= */
+
+function calculateTrip(trip){
+  let total=0;
+
+  const unassignedItems=[];
+  const missingPayers=[];
+
+  trip.places.forEach(place=>{
+    const calc=calculatePlace(place);
+
+    total+=calc.total;
+
+    place.items
+      .filter(i=>i.name.trim())
+      .forEach(item=>{
+        if(!item.consumers || !item.consumers.length){
+          unassignedItems.push({
+            placeId:place.id,
+            placeName:place.name,
+            itemId:item.id,
+            itemName:item.name
+          });
+        }
+      });
+
+    const hasItems=place.items.some(i=>i.name.trim());
+
+    if(hasItems && !place.payerId){
+      missingPayers.push(place.name || "Tempat tanpa nama");
+    }
+  });
+
+  return {
+    total,
+    unassignedItems,
+    missingPayers
+  };
+}
+
+function renderValidation(){
+  const box=document.getElementById("validationBox");
+
+  if(!currentTrip){
+    box.innerHTML="";
+    return;
+  }
+
+  const calc=calculateTrip(currentTrip);
+
+  if(
+    calc.unassignedItems.length===0 &&
+    calc.missingPayers.length===0 &&
+    currentTrip.people.length>0
+  ){
+    box.innerHTML=`
+      <div class="alert alert-success">
+        ✓ Data sudah lengkap. Kamu bisa Final & Lihat Hasil.
+      </div>
+    `;
+    return;
+  }
+
+  let html=`
+    <div class="alert alert-warning">
+      <strong>Masih belum lengkap — tapi tidak masalah.</strong><br>
+      Kamu tetap bisa <strong>Simpan Draft</strong> dan lanjutkan nanti.
+  `;
+
+  if(!currentTrip.people.length){
+    html+=`<br>• Belum ada orang.`;
+  }
+
+  if(calc.unassignedItems.length){
+    html+=`<br>• ${calc.unassignedItems.length} menu belum punya orang yang makan.`;
+  }
+
+  if(calc.missingPayers.length){
+    html+=`<br>• ${calc.missingPayers.length} tempat belum punya payer.`;
+  }
+
+  html+=`</div>`;
+
+  box.innerHTML=html;
+}
+
+function finalizeBill(){
+  syncTripInfo();
+
+  const calc=calculateTrip(currentTrip);
+
+  if(!currentTrip.people.length){
+    alert("Tambahkan minimal satu orang terlebih dahulu.");
+    return;
+  }
+
+  if(calc.unassignedItems.length){
+    alert(
+      "Masih ada menu yang belum dibagi.\n\n" +
+      calc.unassignedItems.map(x=>`• ${x.placeName}: ${x.itemName}`).join("\n")
+    );
+    return;
+  }
+
+  if(calc.missingPayers.length){
+    alert(
+      "Masih ada tempat yang belum memiliki payer:\n\n" +
+      calc.missingPayers.map(x=>`• ${x}`).join("\n")
+    );
+    return;
+  }
+
+  currentTrip.status="completed";
+
+  persistCurrentTrip();
+
+  renderResults();
+  showStep(5);
+}
+
+/* =========================
+   CALCULATION
+========================= */
+
+function getItemBase(item){
+  return num(item.price)*Math.max(1,num(item.qty));
+}
+
+function allocateInteger(total,items){
+  const bases=items.map(getItemBase);
+  const baseTotal=bases.reduce((a,b)=>a+b,0);
+
+  if(!items.length || baseTotal<=0){
+    return items.map(()=>0);
+  }
+
+  const raw=bases.map(b=>total*b/baseTotal);
+  const rounded=raw.map(x=>Math.floor(x));
+
+  let remainder=Math.round(total)-rounded.reduce((a,b)=>a+b,0);
+
+  const fractions=raw
+    .map((x,i)=>({i,f:x-rounded[i]}))
+    .sort((a,b)=>b.f-a.f);
+
+  let index=0;
+
+  while(remainder>0 && fractions.length){
+    rounded[fractions[index % fractions.length].i]++;
+    remainder--;
+    index++;
+  }
+
+  return rounded;
+}
+
+function splitAmongConsumers(amount,consumerIds){
+  if(!consumerIds?.length) return {};
+
+  const base=Math.floor(amount/consumerIds.length);
+  let remainder=amount-base*consumerIds.length;
+
+  const result={};
+
+  consumerIds.forEach((id,index)=>{
+    result[id]=base+(index<remainder?1:0);
+  });
+
+  return result;
+}
+
+function buildDetailedAllocation(place){
+  const validItems=place.items.filter(i=>i.name.trim());
+  const calc=calculatePlace(place);
+
+  const itemFinalTotals=allocateInteger(calc.total,validItems);
+
+  return validItems.map((item,index)=>{
+    const finalTotal=itemFinalTotals[index];
+
+    const consumers=item.consumers || [];
+
+    return {
+      item,
+      base:getItemBase(item),
+      finalTotal,
+      consumerShares:splitAmongConsumers(finalTotal,consumers)
+    };
+  });
+}
+
+/* =========================
+   RESULTS
+========================= */
+
+function calculateResults(trip){
+  const people={};
+
+  trip.people.forEach(person=>{
+    people[person.id]={
+      id:person.id,
+      name:person.name || "Tanpa Nama",
+      gross:0,
+      total:0,
+      paid:0,
+      places:{}
+    };
+  });
+
+  const placeResults=[];
+
+  trip.places.forEach(place=>{
+    const calc=calculatePlace(place);
+    const allocation=buildDetailedAllocation(place);
+
+    const payer=place.payerId;
+
+    if(payer && people[payer]){
+      people[payer].paid += Math.round(calc.total);
+    }
+
+    allocation.forEach(entry=>{
+      Object.entries(entry.consumerShares).forEach(([personId,share])=>{
+        if(!people[personId]) return;
+
+        people[personId].gross += share;
+
+        if(!people[personId].places[place.id]){
+          people[personId].places[place.id]={
+            placeName:place.name || "Tempat tanpa nama",
+            items:[],
+            total:0
+          };
         }
 
-
-        /* ADD PLACE */
-
-        document
-            .getElementById(
-                "addPlaceBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    addPlace();
-
-                }
-            );
-
-
-        /* PLACE CLICK */
-
-        document
-            .getElementById(
-                "placesList"
-            )
-            .addEventListener(
-                "click",
-                function(event){
-
-                    const deletePlaceButton =
-                        event.target.closest(
-                            "[data-delete-place]"
-                        );
-
-
-                    if(deletePlaceButton){
-
-                        deletePlace(
-                            Number(
-                                deletePlaceButton
-                                    .dataset
-                                    .deletePlace
-                            )
-                        );
-
-                        return;
-
-                    }
-
-
-                    const addItemButton =
-                        event.target.closest(
-                            "[data-add-item]"
-                        );
-
-
-                    if(addItemButton){
-
-                        addItem(
-                            Number(
-                                addItemButton
-                                    .dataset
-                                    .addItem
-                            )
-                        );
-
-                        return;
-
-                    }
-
-
-                    const deleteItemButton =
-                        event.target.closest(
-                            "[data-delete-item]"
-                        );
-
-
-                    if(deleteItemButton){
-
-                        const [
-
-                            pIndex,
-
-                            iIndex
-
-                        ] =
-
-                            deleteItemButton
-                                .dataset
-                                .deleteItem
-                                .split("|")
-                                .map(Number);
-
-
-                        deleteItem(
-                            pIndex,
-                            iIndex
-                        );
-
-                    }
-
-                }
-            );
-
-
-        /* PLACE INPUT */
-
-        document
-            .getElementById(
-                "placesList"
-            )
-            .addEventListener(
-                "input",
-                function(event){
-
-                    const p =
-                        Number(
-                            event.target
-                                .dataset
-                                .place
-                        );
-
-
-                    if(
-                        Number.isNaN(p) ||
-                        !places[p]
-                    ){
-
-                        return;
-
-                    }
-
-
-                    if(
-                        event.target.classList
-                            .contains(
-                                "place-name"
-                            )
-                    ){
-
-                        places[p].name =
-                            event.target.value;
-
-                    }
-
-
-                    if(
-                        event.target.classList
-                            .contains(
-                                "item-name"
-                            )
-                    ){
-
-                        const i =
-                            Number(
-                                event.target
-                                    .dataset
-                                    .item
-                            );
-
-
-                        places[p]
-                            .items[i]
-                            .name =
-                            event.target.value;
-
-                    }
-
-
-                    if(
-                        event.target.classList
-                            .contains(
-                                "item-price"
-                            )
-                    ){
-
-                        const i =
-                            Number(
-                                event.target
-                                    .dataset
-                                    .item
-                            );
-
-
-                        places[p]
-                            .items[i]
-                            .price =
-                            Number(
-                                event.target.value
-                            ) || 0;
-
-                    }
-
-
-                    if(
-                        event.target.classList
-                            .contains(
-                                "item-qty"
-                            )
-                    ){
-
-                        const i =
-                            Number(
-                                event.target
-                                    .dataset
-                                    .item
-                            );
-
-
-                        let qty =
-                            Number(
-                                event.target.value
-                            ) || 1;
-
-
-                        if(qty < 1){
-
-                            qty = 1;
-
-                        }
-
-
-                        places[p]
-                            .items[i]
-                            .qty =
-                            qty;
-
-                    }
-
-
-                    if(
-                        event.target.classList
-                            .contains(
-                                "place-field"
-                            )
-                    ){
-
-                        const field =
-                            event.target
-                                .dataset
-                                .field;
-
-
-                        places[p][field] =
-                            Number(
-                                event.target.value
-                            ) || 0;
-
-                    }
-
-
-                    updatePlaceSummaryOnly(p);
-
-                }
-            );
-
-
-        /* TO PEOPLE */
-
-        document
-            .getElementById(
-                "toPeopleBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    if(
-                        !validatePlaces()
-                    )
-                        return;
-
-
-                    prepareFinalPrices();
-
-                    showStep(2);
-
-                    renderPeople();
-
-                }
-            );
-
-
-        /* ADD PERSON */
-
-        document
-            .getElementById(
-                "addPersonBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    addPerson();
-
-                }
-            );
-
-
-        /* PEOPLE CLICK */
-
-        document
-            .getElementById(
-                "peopleList"
-            )
-            .addEventListener(
-                "click",
-                function(event){
-
-                    const button =
-                        event.target.closest(
-                            "[data-delete-person]"
-                        );
-
-
-                    if(!button)
-                        return;
-
-
-                    deletePerson(
-                        Number(
-                            button.dataset
-                                .deletePerson
-                        )
-                    );
-
-                }
-            );
-
-
-        /* PEOPLE INPUT */
-
-        document
-            .getElementById(
-                "peopleList"
-            )
-            .addEventListener(
-                "input",
-                function(event){
-
-                    if(
-                        !event.target.classList
-                            .contains(
-                                "person-input"
-                            )
-                    ){
-
-                        return;
-
-                    }
-
-
-                    const index =
-                        Number(
-                            event.target
-                                .dataset
-                                .index
-                        );
-
-
-                    if(people[index]){
-
-                        people[index].name =
-                            event.target.value;
-
-                    }
-
-                }
-            );
-
-
-        /* TO ASSIGNMENT */
-
-        document
-            .getElementById(
-                "toAssignmentBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    if(
-                        people.length === 0
-                    ){
-
-                        alert(
-                            "Tambahkan minimal 1 orang."
-                        );
-
-                        return;
-
-                    }
-
-
-                    for(
-                        let i=0;
-                        i<people.length;
-                        i++
-                    ){
-
-                        if(
-                            !people[i]
-                                .name
-                                .trim()
-                        ){
-
-                            alert(
-                                "Nama orang nomor " +
-                                (i+1) +
-                                " belum diisi."
-                            );
-
-                            return;
-
-                        }
-
-                    }
-
-
-                    renderAssignment();
-
-                    showStep(3);
-
-                }
-            );
-
-
-        /* TO PAYER */
-
-        document
-            .getElementById(
-                "toPayerBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    if(
-                        !validateAssignment()
-                    ){
-
-                        return;
-
-                    }
-
-
-                    renderPayers();
-
-                    showStep(4);
-
-                }
-            );
-
-
-        /* PAYER */
-
-        document
-            .getElementById(
-                "payerList"
-            )
-            .addEventListener(
-                "change",
-                function(event){
-
-                    if(
-                        !event.target.classList
-                            .contains(
-                                "payer-select"
-                            )
-                    ){
-
-                        return;
-
-                    }
-
-
-                    const p =
-                        Number(
-                            event.target
-                                .dataset
-                                .place
-                        );
-
-
-                    places[p].payer =
-                        event.target.value;
-
-                }
-            );
-
-
-        /* CALCULATE */
-
-        document
-            .getElementById(
-                "calculateBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    for(
-                        let i=0;
-                        i<places.length;
-                        i++
-                    ){
-
-                        if(
-                            places[i].payer === "" ||
-                            places[i].payer === null
-                        ){
-
-                            alert(
-                                "Pilih siapa yang membayar " +
-                                places[i].name +
-                                "."
-                            );
-
-                            return;
-
-                        }
-
-                    }
-
-
-                    renderResults();
-
-
-                    const url =
-                        createShareLink();
-
-
-                    document
-                        .getElementById(
-                            "shareLink"
-                        )
-                        .textContent =
-                        url;
-
-
-                    calculated = true;
-
-
-                    showStep(5);
-
-                }
-            );
-
-
-        /* SHARE */
-
-        document
-            .getElementById(
-                "shareBtn"
-            )
-            .addEventListener(
-                "click",
-                async function(){
-
-                    const url =
-                        document
-                            .getElementById(
-                                "shareLink"
-                            )
-                            .textContent;
-
-
-                    if(
-                        navigator.share
-                    ){
-
-                        try{
-
-                            await navigator.share({
-
-                                title:
-                                    document
-                                    .getElementById(
-                                        "tripName"
-                                    )
-                                    .value,
-
-                                text:
-                                    "Split Bill " +
-                                    document
-                                    .getElementById(
-                                        "tripName"
-                                    )
-                                    .value,
-
-                                url:url
-
-                            });
-
-                        }catch(error){
-
-                            console.log(error);
-
-                        }
-
-                    }else{
-
-                        await navigator.clipboard
-                            .writeText(url);
-
-                        alert(
-                            "Link berhasil dicopy."
-                        );
-
-                    }
-
-                }
-            );
-
-
-        /* COPY */
-
-        document
-            .getElementById(
-                "copyBtn"
-            )
-            .addEventListener(
-                "click",
-                async function(){
-
-                    const url =
-                        document
-                        .getElementById(
-                            "shareLink"
-                        )
-                        .textContent;
-
-
-                    try{
-
-                        await navigator.clipboard
-                            .writeText(url);
-
-
-                        alert(
-                            "Link berhasil dicopy."
-                        );
-
-                    }catch(error){
-
-                        alert(
-                            "Gagal copy otomatis. " +
-                            "Silakan copy link secara manual."
-                        );
-
-                    }
-
-                }
-            );
-
-
-        /* BACK */
-
-        document
-            .getElementById(
-                "backBtn"
-            )
-            .addEventListener(
-                "click",
-                function(){
-
-                    renderAssignment();
-
-                    showStep(3);
-
-                }
-            );
-
+        people[personId].places[place.id].items.push({
+          name:entry.item.name,
+          qty:entry.item.qty,
+          share
+        });
+
+        people[personId].places[place.id].total += share;
+        people[personId].total += share;
+      });
+    });
+
+    placeResults.push({
+      place,
+      calc,
+      allocation
+    });
+  });
+
+  return {
+    people:Object.values(people),
+    places:placeResults,
+    total:placeResults.reduce((sum,p)=>sum+Math.round(p.calc.total),0)
+  };
+}
+
+function generateTransfers(result){
+  const balances=result.people.map(p=>({
+    id:p.id,
+    name:p.name,
+    balance:Math.round(p.paid-p.total)
+  }));
+
+  const receivers=balances
+    .filter(x=>x.balance>0)
+    .map(x=>({...x}))
+    .sort((a,b)=>b.balance-a.balance);
+
+  const payers=balances
+    .filter(x=>x.balance<0)
+    .map(x=>({...x,balance:-x.balance}))
+    .sort((a,b)=>b.balance-a.balance);
+
+  const transfers=[];
+
+  let i=0;
+  let j=0;
+
+  while(i<payers.length && j<receivers.length){
+    const payer=payers[i];
+    const receiver=receivers[j];
+
+    const amount=Math.min(payer.balance,receiver.balance);
+
+    if(amount>0){
+      transfers.push({
+        from:payer.name,
+        to:receiver.name,
+        amount
+      });
     }
-);
 
+    payer.balance-=amount;
+    receiver.balance-=amount;
 
-/* ============================================================
-   UPDATE SUMMARY
-============================================================ */
+    if(payer.balance<=0) i++;
+    if(receiver.balance<=0) j++;
+  }
 
-function updatePlaceSummaryOnly(
-    placeIndex
-){
+  return transfers;
+}
 
-    const place =
-        places[placeIndex];
+function renderResults(){
+  if(!currentTrip) return;
 
+  const result=calculateResults(currentTrip);
+  const transfers=generateTransfers(result);
 
-    const bill =
-        calculatePlace(place);
+  const totalPaid=result.people.reduce((s,p)=>s+p.paid,0);
 
+  const el=document.getElementById("resultView");
 
-    const cards =
-        document.querySelectorAll(
-            "#placesList .place-card"
-        );
+  el.innerHTML=`
+    <div class="result-hero">
+      <span class="badge badge-complete">✓ Split Bill Selesai</span>
 
+      <h1 style="margin:12px 0 4px">
+        ${esc(currentTrip.tripName || "Split Bill")}
+      </h1>
 
-    const card =
-        cards[placeIndex];
+      <div class="small">
+        📍 ${esc(currentTrip.destination || "Destinasi belum diisi")}
+      </div>
 
+      <div class="result-total">
+        ${money(result.total)}
+      </div>
 
-    if(!card)
-        return;
+      <div class="small">
+        Total yang harus dibayar
+      </div>
+    </div>
 
+    <div class="btn-row" style="margin-bottom:20px">
+      <button class="btn btn-primary" onclick="showStep(1)">
+        ✏️ Edit Data
+      </button>
 
-    const totalInputs =
-        card.querySelectorAll(
-            ".menu-total"
-        );
+      <button class="btn btn-secondary" onclick="showStep(4)">
+        ☑️ Edit Pembagian
+      </button>
 
+      <button class="btn btn-light" onclick="goHome()">
+        🏠 Home
+      </button>
+    </div>
 
-    place.items.forEach(
-        (item,index)=>{
+    <div class="card">
+      <h2>📊 Ringkasan</h2>
 
-            if(totalInputs[index]){
+      <div class="summary-grid">
 
-                totalInputs[index].value =
-                    rupiah(
-                        Number(
-                            item.price || 0
-                        ) *
-                        Number(
-                            item.qty || 1
-                        )
-                    );
+        <div class="summary-box">
+          <small>Total Bill</small>
+          <strong>${money(result.total)}</strong>
+        </div>
 
+        <div class="summary-box">
+          <small>Orang</small>
+          <strong>${currentTrip.people.length}</strong>
+        </div>
+
+        <div class="summary-box">
+          <small>Tempat</small>
+          <strong>${currentTrip.places.length}</strong>
+        </div>
+
+        <div class="summary-box">
+          <small>Total Dibayar</small>
+          <strong>${money(totalPaid)}</strong>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🍜 Detail Per Tempat</h2>
+
+      ${result.places.map(placeResult=>`
+        <div class="result-place">
+
+          <div class="result-place-header">
+            <strong>
+              ${esc(placeResult.place.name || "Tempat tanpa nama")}
+            </strong>
+
+            <strong>
+              ${money(placeResult.calc.total)}
+            </strong>
+          </div>
+
+          <div class="result-place-body">
+
+            <div class="summary-grid">
+
+              <div class="summary-box">
+                <small>Subtotal</small>
+                <strong>${money(placeResult.calc.subtotal)}</strong>
+              </div>
+
+              <div class="summary-box">
+                <small>Discount</small>
+                <strong>-${money(placeResult.calc.discount)}</strong>
+              </div>
+
+              <div class="summary-box">
+                <small>Service</small>
+                <strong>${money(placeResult.calc.service)}</strong>
+              </div>
+
+              <div class="summary-box">
+                <small>Tax</small>
+                <strong>${money(placeResult.calc.tax)}</strong>
+              </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            ${placeResult.allocation.map(entry=>`
+              <div class="result-item">
+
+                <div class="result-item-head">
+                  <div>
+                    <strong>${esc(entry.item.name)}</strong>
+
+                    <div class="small">
+                      ${entry.item.qty} × ${money(entry.item.price)}
+                    </div>
+                  </div>
+
+                  <strong>${money(entry.finalTotal)}</strong>
+                </div>
+
+                <div class="consumer-list">
+                  ${entry.item.consumers?.length
+                    ?
+                    entry.item.consumers.map(id=>{
+                      const person=currentTrip.people.find(p=>p.id===id);
+                      return person
+                        ? `👤 ${esc(person.name || "Tanpa Nama")}: ${money(entry.consumerShares[id])}`
+                        : "";
+                    }).join("<br>")
+                    :
+                    "Belum ada yang makan"
+                  }
+                </div>
+
+              </div>
+            `).join("")}
+
+            <div class="divider"></div>
+
+            <div class="breakdown-row">
+              <span>💳 Payer</span>
+              <strong>
+                ${
+                  currentTrip.people.find(p=>p.id===placeResult.place.payerId)?.name
+                  || "-"
+                }
+              </strong>
+            </div>
+
+          </div>
+        </div>
+      `).join("")}
+
+    </div>
+
+    <div class="card">
+      <h2>👥 Detail Per Orang</h2>
+
+      ${result.people.map(person=>`
+
+        <div class="person-result">
+
+          <div class="person-result-head">
+
+            <div>
+              <h3 style="margin-bottom:4px">
+                👤 ${esc(person.name)}
+              </h3>
+
+              <span class="small">
+                Total konsumsi: ${money(person.total)}
+              </span>
+            </div>
+
+            ${
+              person.paid-person
+              ?
+              ""
+              :
+              ""
             }
 
+            ${renderBalanceBadge(person)}
+          </div>
+
+          ${Object.values(person.places).map(place=>`
+            <div style="margin-bottom:13px">
+
+              <strong>🍜 ${esc(place.placeName)}</strong>
+
+              ${place.items.map(item=>`
+                <div class="breakdown-row">
+                  <span>
+                    ${esc(item.name)}
+                    <span class="small">× ${item.qty}</span>
+                  </span>
+
+                  <strong>${money(item.share)}</strong>
+                </div>
+              `).join("")}
+
+              <div class="breakdown-row total">
+                <span>Subtotal tempat</span>
+                <span>${money(place.total)}</span>
+              </div>
+
+            </div>
+          `).join("")}
+
+          <div class="divider"></div>
+
+          <div class="breakdown-row">
+            <span>Total harus dibayar</span>
+            <strong>${money(person.total)}</strong>
+          </div>
+
+          <div class="breakdown-row">
+            <span>Total sudah dibayar</span>
+            <strong>${money(person.paid)}</strong>
+          </div>
+
+        </div>
+
+      `).join("")}
+
+    </div>
+
+    <div class="card">
+      <h2>💸 Settlement</h2>
+
+      ${
+        transfers.length
+        ?
+        transfers.map(t=>`
+          <div class="transfer">
+            <div>
+              <strong>${esc(t.from)}</strong>
+              <div class="small">transfer ke ${esc(t.to)}</div>
+            </div>
+
+            <div class="transfer-amount">
+              ${money(t.amount)}
+            </div>
+          </div>
+        `).join("")
+        :
+        `
+          <div class="alert alert-success">
+            ✓ Semua sudah pas. Tidak ada transfer yang diperlukan.
+          </div>
+        `
+      }
+
+    </div>
+
+    <div class="card">
+      <h2>🧾 Rekonsiliasi</h2>
+
+      <div class="breakdown-row">
+        <span>Total bill</span>
+        <strong>${money(result.total)}</strong>
+      </div>
+
+      <div class="breakdown-row">
+        <span>Total konsumsi semua orang</span>
+        <strong>${money(
+          result.people.reduce((s,p)=>s+p.total,0)
+        )}</strong>
+      </div>
+
+      <div class="breakdown-row">
+        <span>Total pembayaran</span>
+        <strong>${money(totalPaid)}</strong>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="alert ${
+        Math.round(totalPaid)===Math.round(result.total)
+        ? "alert-success"
+        : "alert-danger"
+      }">
+        ${
+          Math.round(totalPaid)===Math.round(result.total)
+          ? "✓ Rekonsiliasi pembayaran seimbang."
+          : "⚠️ Total pembayaran belum sama dengan total bill."
         }
-    );
+      </div>
 
+    </div>
+  `;
+}
 
-    const summaryRows =
-        card.querySelectorAll(
-            ".summary-row"
-        );
+function renderBalanceBadge(person){
+  const balance=Math.round(person.paid-person.total);
 
+  if(balance>0){
+    return `
+      <div class="balance balance-receive">
+        Menerima ${money(balance)}
+      </div>
+    `;
+  }
 
-    if(summaryRows.length >= 6){
+  if(balance<0){
+    return `
+      <div class="balance balance-owe">
+        Kurang bayar ${money(Math.abs(balance))}
+      </div>
+    `;
+  }
 
-        summaryRows[0]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            rupiah(
-                bill.subtotal
-            );
+  return `
+    <div class="balance balance-zero">
+      Pas ✓
+    </div>
+  `;
+}
 
+/* =========================
+   TOAST
+========================= */
 
-        summaryRows[1]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            "- " +
-            rupiah(
-                bill.discount
-            );
+function showToast(message){
+  const existing=document.getElementById("toast");
 
+  if(existing) existing.remove();
 
-        summaryRows[2]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            rupiah(
-                bill.service
-            );
+  const toast=document.createElement("div");
 
+  toast.id="toast";
+  toast.textContent=message;
 
-        summaryRows[3]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            rupiah(
-                bill.tax
-            );
+  toast.style.cssText=`
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%);
+    background:#39334f;
+    color:white;
+    padding:12px 17px;
+    border-radius:13px;
+    z-index:200;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    font-size:13px;
+    font-weight:700;
+  `;
 
+  document.body.appendChild(toast);
 
-        summaryRows[4]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            rupiah(
-                bill.other
-            );
+  setTimeout(()=>{
+    toast.remove();
+  },2200);
+}
 
+/* =========================
+   INPUT CHANGE TRACKER
+========================= */
 
-        summaryRows[5]
-            .querySelector(
-                "span:last-child"
-            )
-            .textContent =
-            rupiah(
-                bill.total
-            );
+document.addEventListener("input",function(e){
+  if(
+    e.target.matches("input") &&
+    currentTrip &&
+    !e.target.closest("#homeView")
+  ){
+    markDirty();
+  }
+});
 
-    }
+/* =========================
+   INIT
+========================= */
 
+loadTrips();
+
+if(trips.length){
+  renderHome();
+}else{
+  newTrip();
 }
 
 </script>
